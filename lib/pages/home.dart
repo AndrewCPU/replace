@@ -43,8 +43,8 @@ class HomeState extends State<HomePage>{
   HomeState(){
     collapsedText = "Controls";
     title = "Replace.LIVE";
-    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
-    FlutterStatusbarcolor.setNavigationBarColor(Colors.white);
+//    FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).backgroundColor);
+//    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).backgroundColor);
     FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
     qr = QrImage(
       data: "$currentTVID",
@@ -64,22 +64,26 @@ class HomeState extends State<HomePage>{
   Widget build(BuildContext context) {
     // TODO: implement build
 
+        FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).backgroundColor);
+    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).backgroundColor);
 
     Size size = MediaQuery.of(context).size;
 
     Container logoContainer = Container(child:  Image.network("https://i.ya-webdesign.com/images/r-logo-png-12.png", height: size.height / 15,), margin: EdgeInsets.only(top: kBottomNavigationBarHeight / 8),);
 
     Hero logo = Hero(tag: "logo",child: logoContainer,);
+    var arr = ["cartoons","news","music","edm","weather","games streaming","art","programming","video gaming", "league of legends", "minecraft", "music videos"];
 
 //    SizedBox sizedBox = SizedBox(child: card, width: size.width <= 700 ? size.width : size.width / 2,);
     return Scaffold(
-      backgroundColor: Colorsheet.background,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SlidingUpPanel(
         controller: panelController,
         borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
         parallaxEnabled: true,
         backdropTapClosesPanel: true,
         backdropEnabled: true,
+        color: Theme.of(context).backgroundColor,
         panel: Padding(padding: EdgeInsets.only(top: 70, left: 20, right: 20),child: Center(child: Column(children: <Widget>[
           GestureDetector(child: qr, onTap: (){
             print("Refreshing: to " + currentTVID);
@@ -95,29 +99,28 @@ class HomeState extends State<HomePage>{
         collapsed: Center(child: OutlineButton( onPressed: open,child: Text(this.collapsedText, style: TextStyle(fontWeight: FontWeight.bold),))),
         body: Stack(children: <Widget>[
 
-          Column(children: <Widget>[
+
 //          IndexedStack(children: <Widget>[SizedBox(child: VideoPlayer(), width: size.width, height: size.height / 2)],),
             new Container(
               child:
               Center(
                 child:
                    Container(
-                      margin: EdgeInsets.only(top: 100), child: PageView.builder(itemBuilder: (context,  index){
-                        var arr = ["cartoons","news","music","edm","weather","gamesstreaming","art","programming","videogaming", "leagueoflegends"];
-
+                      margin: EdgeInsets.only(top: 100), child:
+                   ListView.builder(itemCount: 10, itemBuilder: (context,  index){
+//                        return Text(index.toString());
                         return ChannelView(mode: arr[index],);
 
                         //return Container(child: Text( (index.toString() + " INDEX")),);
-                   },)
+                   }, scrollDirection: Axis.vertical, physics: BouncingScrollPhysics(),)
                   ,
-                padding: EdgeInsets.all(20),),
+                padding: EdgeInsets.only(top: 20, bottom: 20),),
               ),
               height: size.height,
               width: 500.0,
             ),
-          ],),
           NavigationBar(child: Row(children: <Widget>[
-    logo, Center(child:Text(this.title))
+    logo, Center(child:Padding(padding: EdgeInsets.all(10),child:Text("Replace DOT Live", style: Theme.of(context).textTheme.title,) ,),)
     ],),)  ],)
       )
     );

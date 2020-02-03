@@ -14,15 +14,26 @@ class YouTubeEntry extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(onTap: (){
+    Widget img = Image.network("https://img.youtube.com/vi/$videoURL/hqdefault.jpg");
+    img = ClipRRect(
+      borderRadius: BorderRadius.circular(30.0),
+      child: img,
+    );
+    return  GestureDetector(onTap: (){
       playEpisode(videoURL);
     },
-    child: ListTile(//https://www.youtube.com/results?search_query=24+7+live+stream
-      title: Card(color: Colorsheet.accent,elevation: 5,
-          child: Column(children: <Widget>[
-            Image.network("https://img.youtube.com/vi/$videoURL/hqdefault.jpg"),
-          Padding(child:OutlineButton(onPressed: () => playEpisode(videoURL), child: Center(child: Row(children: <Widget>[Icon(Icons.play_circle_outline), Text("Watch")],),),), padding: EdgeInsets.all(15),) ]),),
-    ),);
+      child:
+      Container(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height / 5,child: ListTile(//https://www.youtube.com/results?search_query=24+7+live+stream
+        title:
+        Card(shape: RoundedRectangleBorder (borderRadius: BorderRadius.circular(30)), color: Theme.of(context).backgroundColor,elevation: 5,
+          child:
+          Container(height: 300, child:
+          Column(children: <Widget>[
+            Padding(padding: EdgeInsets.only(bottom: 10), child:img,),
+          ]),)
+        ),
+      )),
+    );
   }
   void playEpisode(String a){
     print("SENDING PLAY CODE FOR " + a);

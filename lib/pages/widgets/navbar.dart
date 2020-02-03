@@ -22,7 +22,7 @@ class NavigationState extends State<NavigationBar>{
           child:
           Container(
             decoration:
-            BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30))),
+            BoxDecoration(color: Theme.of(context).backgroundColor, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30))),
             child:
         Row(children: <Widget>[
           child

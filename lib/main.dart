@@ -19,6 +19,21 @@ void main(){
 class MyApp extends StatelessWidget {
   static bool mobile = false;
   Widget app;
+  static const MaterialColor white = const MaterialColor(
+    0xFFFFFFFF,
+    const <int, Color>{
+      50: const Color(0xFFFFFFFF),
+      100: const Color(0xFFFFFFFF),
+      200: const Color(0xFFFFFFFF),
+      300: const Color(0xFFFFFFFF),
+      400: const Color(0xFFFFFFFF),
+      500: const Color(0xFFFFFFFF),
+      600: const Color(0xFFFFFFFF),
+      700: const Color(0xFFFFFFFF),
+      800: const Color(0xFFFFFFFF),
+      900: const Color(0xFFFFFFFF),
+    },
+  );
   MyApp(){
     FlutterStatusbarcolor.setStatusBarColor(Colorsheet.background);
     FlutterStatusbarcolor.setNavigationBarColor(Colorsheet.background);
@@ -28,8 +43,11 @@ class MyApp extends StatelessWidget {
     this.app = MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: white,
+        backgroundColor: white,
+        accentColor: Colors.cyan,
       ),
+      darkTheme: ThemeData.dark(),
       home: MyHomePage(title: 'Login'),
     );
   }
@@ -69,23 +87,26 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).backgroundColor);
+    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).backgroundColor);
+
     Text title = Text("Welcome to REPLACE", style: TextStyle(fontSize: 30),);
     Size size = MediaQuery.of(context).size;
     if(size.width < 600) MyApp.mobile = true;
     else MyApp.mobile = false;
-    MaterialButton login = MaterialButton(padding: EdgeInsets.all(15),  elevation: 6, minWidth: 300, child: Text("Login", style: TextStyle(color: Colors.black),), color: Colorsheet.accent, onPressed:navigateToLogin, shape: RoundedRectangleBorder(
+    Widget login = MaterialButton(padding: EdgeInsets.all(15),  elevation: 6, minWidth: 300, child: Text("Login", style: TextStyle(color: Colors.black),), color: Theme.of(context).accentColor, onPressed:navigateToLogin, shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(18.0),
     ), );
-    MaterialButton register = MaterialButton(padding: EdgeInsets.all(15), elevation: 6, minWidth: 300, child: Text("Register", style: TextStyle(color: Colors.white),), color: Colors.transparent, onPressed:navigateToRegister, shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(18.0),
-        side: BorderSide(color: Colors.white70)
-    ),);
-    MaterialButton watch = MaterialButton(padding: EdgeInsets.all(15), elevation: 6, minWidth: 300, child: Text("Watch", style: TextStyle(color: Colors.white),), color: Colors.transparent, onPressed: () => Navigator.pushNamed(context, "/widget"), shape: RoundedRectangleBorder(
+    Widget register = MaterialButton(padding: EdgeInsets.all(15), elevation: 6, minWidth: 300, child: Text("Register", style: TextStyle(color: Colors.white),), color: Colors.transparent, onPressed:navigateToRegister, shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(18.0),
         side: BorderSide(color: Colors.white70)
     ),);
 
-    Container options = Container(margin: EdgeInsets.only(top: size.height / 4), child: Column(children: <Widget>[(login), register, watch],));
+
+    login = Padding(padding: EdgeInsets.all(20), child: login,);
+    register = Padding(padding: EdgeInsets.all(20), child: register,);
+
+    Container options = Container(margin: EdgeInsets.only(top: size.height / 4), child: Column(children: <Widget>[(login), register],));
 
     Container logoContainer = Container(child:  Image.network("https://i.ya-webdesign.com/images/r-logo-png-12.png", height: size.height / 3,), margin: EdgeInsets.only(top: kBottomNavigationBarHeight / 8),);
 
@@ -96,6 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
        logo, options,
       ],),)
 
-     ],), backgroundColor: Colorsheet.background,);
+     ],), backgroundColor: Theme.of(context).backgroundColor,);
   }
 }
