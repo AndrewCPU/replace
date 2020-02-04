@@ -24,7 +24,6 @@ class _ChannelState extends State<ChannelView>{
       List<Widget> channels = [];
       for(String channel in response){
         channel = channel.replaceAll("?v=", "");
-        print(channel);
         channels.add(YouTubeEntry(videoURL: channel));
       }
       setState(() {
@@ -42,7 +41,7 @@ class _ChannelState extends State<ChannelView>{
         // Child text spans will inherit styles from parent
         style: Theme.of(context).textTheme.title.merge(TextStyle(fontSize: 30)),
         children: <TextSpan>[
-          new TextSpan(text: 'Watch '),
+          new TextSpan(text: 'Watch ', style: TextStyle(fontWeight: FontWeight.w100)),
           new TextSpan(text: mode, style: new TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),

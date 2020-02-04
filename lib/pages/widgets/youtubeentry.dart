@@ -14,6 +14,8 @@ class YouTubeEntry extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+    double cardWidth = MediaQuery.of(context).size.width / 1.15;
     Widget img = Image.network("https://img.youtube.com/vi/$videoURL/hqdefault.jpg");
     img = ClipRRect(
       borderRadius: BorderRadius.circular(30.0),
@@ -23,13 +25,19 @@ class YouTubeEntry extends StatelessWidget{
       playEpisode(videoURL);
     },
       child:
-      Container(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height / 5,child: ListTile(//https://www.youtube.com/results?search_query=24+7+live+stream
+      Container(width: cardWidth, child: ListTile(//https://www.youtube.com/results?search_query=24+7+live+stream
         title:
         Card(shape: RoundedRectangleBorder (borderRadius: BorderRadius.circular(30)), color: Theme.of(context).backgroundColor,elevation: 5,
           child:
           Container(height: 300, child:
           Column(children: <Widget>[
             Padding(padding: EdgeInsets.only(bottom: 10), child:img,),
+            Row(children: <Widget>[
+              Container(width: cardWidth / 3.4, child: Center(child: IconButton(icon: Icon(Icons.keyboard_arrow_up)),),),
+              Container(width: cardWidth / 3.4, child: Center(child: Text("0 "),),),
+              Container(width: cardWidth / 3.4, child: Center(child: IconButton(icon: Icon(Icons.keyboard_arrow_down)),),),
+            ],)
+
           ]),)
         ),
       )),

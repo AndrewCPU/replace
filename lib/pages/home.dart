@@ -69,10 +69,8 @@ class HomeState extends State<HomePage>{
 
     Size size = MediaQuery.of(context).size;
 
-    Container logoContainer = Container(child:  Image.network("https://i.ya-webdesign.com/images/r-logo-png-12.png", height: size.height / 15,), margin: EdgeInsets.only(top: kBottomNavigationBarHeight / 8),);
 
-    Hero logo = Hero(tag: "logo",child: logoContainer,);
-    var arr = ["cartoons","news","music","edm","weather","games streaming","art","programming","video gaming", "league of legends", "minecraft", "music videos"];
+    var arr = ["cartoons","news","music", "edm", "weather", "games streaming", "art", "programming", "video gaming", "minecraft", "music videos"];
 
 //    SizedBox sizedBox = SizedBox(child: card, width: size.width <= 700 ? size.width : size.width / 2,);
     return Scaffold(
@@ -107,7 +105,7 @@ class HomeState extends State<HomePage>{
                 child:
                    Container(
                       margin: EdgeInsets.only(top: 100), child:
-                   ListView.builder(itemCount: 10, itemBuilder: (context,  index){
+                   ListView.builder(itemCount: arr.length, itemBuilder: (context,  index){
 //                        return Text(index.toString());
                         return ChannelView(mode: arr[index],);
 
@@ -119,9 +117,7 @@ class HomeState extends State<HomePage>{
               height: size.height,
               width: 500.0,
             ),
-          NavigationBar(child: Row(children: <Widget>[
-    logo, Center(child:Padding(padding: EdgeInsets.all(10),child:Text("Replace DOT Live", style: Theme.of(context).textTheme.title,) ,),)
-    ],),)  ],)
+          NavigationBar()])
       )
     );
   }
