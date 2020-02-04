@@ -1,5 +1,6 @@
 import 'package:Replace/pages/home.dart';
 import 'package:Replace/pages/widgets/promptpage.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
@@ -19,19 +20,19 @@ class SubscribePage extends StatefulWidget {
 }
 
 class _SubscribePageState extends State<SubscribePage> {
+  TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Text mailing = Text(
       'Subscribe to our mailing list!',
-      style: TextStyle(
-        fontSize: 16,
-      ),
+      style: Theme.of(context).textTheme.title,
     );
     //text form for email input
     TextFormField email = TextFormField(
       decoration: InputDecoration(
         labelText: "Email",
       ),
+      controller: _controller,
     );
     //text form for name input
     TextFormField name = TextFormField(
@@ -52,8 +53,14 @@ class _SubscribePageState extends State<SubscribePage> {
   }
 
   void subscribe() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return WebHomePage();
-    }));
+    bool valid = EmailValidator.validate(_controller.text);
+    if(valid) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return WebHomePage();
+      }));
+    }
+    else{
+      _controller.text = "Invalid email";
+    }
   }
 }

@@ -100,14 +100,14 @@ class _MyHomePageState extends State<MyHomePage> {
     if(size.width < 600) MyApp.mobile = true;
     else MyApp.mobile = false;
     Widget login = MaterialButton(padding: EdgeInsets.all(15),  elevation: 6, minWidth: 300, child: Text("Login", style: TextStyle(color: Colors.black),), color: Theme.of(context).accentColor, onPressed:navigateToLogin, shape: RoundedRectangleBorder(
-      borderRadius: new BorderRadius.circular(18.0),
+      borderRadius: new BorderRadius.circular(30.0),
     ), );
     Widget register = MaterialButton(padding: EdgeInsets.all(15), elevation: 6, minWidth: 300, child: Text("Register", style: TextStyle(color: Colors.black),), color: Colors.transparent, onPressed:navigateToRegister, shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(18.0),
+        borderRadius: new BorderRadius.circular(30.0),
         side: BorderSide(color: Colors.white70)
     ),);
     Widget subscribe = MaterialButton(padding: EdgeInsets.all(15), elevation: 6, minWidth: 300, child: Text("Subscribe", style: TextStyle(color: Colors.black),), color: Colors.transparent, onPressed:navigateToSubscribe, shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(18.0),
+        borderRadius: new BorderRadius.circular(30.0),
         side: BorderSide(color: Colors.white70)
     ),);
 
