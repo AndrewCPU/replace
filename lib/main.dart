@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
     register = Padding(padding: EdgeInsets.all(20), child: register,);
     subscribe = Padding(padding: EdgeInsets.all(20), child: subscribe,);
 
-    Container options = Container(margin: EdgeInsets.only(top: size.height / 4), child: Column(children: <Widget>[(login), register, subscribe]));
+    Container options = Container(height: size.height / 3, margin: EdgeInsets.only(top: size.height / 4), child: ListView(children: <Widget>[(login), register, subscribe]));
 
     Container logoContainer = Container(child:  Image.network("https://i.ya-webdesign.com/images/r-logo-png-12.png", height: size.height / 3,), margin: EdgeInsets.only(top: kBottomNavigationBarHeight / 8),);
 
