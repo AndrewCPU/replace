@@ -11,7 +11,6 @@ void main() {
 
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
-  //new comment test
 }
 
 class MyApp extends StatelessWidget {
