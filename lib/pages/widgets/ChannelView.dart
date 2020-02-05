@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Replace/network/YoutubeConnection.dart';
 import 'package:Replace/pages/widgets/youtubeentry.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +26,7 @@ class _ChannelState extends State<ChannelView>{
       List<Widget> channels = [];
       for(String channel in response){
         channel = channel.replaceAll("?v=", "");
-        channels.add(YouTubeEntry(videoURL: channel));
+        channels.add(YoutubeEntry(videoURL: channel));
       }
       setState(() {
         this.channels = channels;
@@ -35,13 +37,17 @@ class _ChannelState extends State<ChannelView>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    
+    
+    var words = ["Watch","Enjoy","View","Observe","Check","Study","Inspect","Examine","Behold"];
+    
     var text = new RichText( textAlign: TextAlign.left,
       text: new TextSpan(
         // Note: Styles for TextSpans must be explicitly defined.
         // Child text spans will inherit styles from parent
         style: Theme.of(context).textTheme.title.merge(TextStyle(fontSize: 30)),
         children: <TextSpan>[
-          new TextSpan(text: 'Watch ', style: TextStyle(fontWeight: FontWeight.w100)),
+          new TextSpan(text: words[Random().nextInt(words.length)] + " ", style: TextStyle(fontWeight: FontWeight.w100)),
           new TextSpan(text: mode, style: new TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
