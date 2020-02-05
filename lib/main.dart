@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (size.width < 600)
       MyApp.mobile = true;
     else
-      MyApp.mobile = false;
+      MyApp.mobile = true;
     Widget login = MaterialButton(
       padding: EdgeInsets.all(15),
       elevation: 6,
