@@ -47,7 +47,7 @@ class _ChannelState extends State<ChannelView>{
         // Child text spans will inherit styles from parent
         style: Theme.of(context).textTheme.title.merge(TextStyle(fontSize: 30)),
         children: <TextSpan>[
-          new TextSpan(text: words[Random().nextInt(words.length)] + " ", style: TextStyle(fontWeight: FontWeight.w100)),
+          new TextSpan(text: words[Random().nextInt(words.length)] + " ", style: TextStyle(fontWeight: FontWeight.w200)),
           new TextSpan(text: mode, style: new TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
