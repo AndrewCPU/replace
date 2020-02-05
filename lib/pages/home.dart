@@ -2,16 +2,14 @@
 
 import 'package:Replace/network/YoutubeConnection.dart';
 import 'package:Replace/pages/widgets/ChannelView.dart';
-import 'package:Replace/pages/widgets/youtubeentry.dart';
+import 'package:Replace/pages/widgets/navbar.dart';
+import 'package:Replace/pages/widgets/usercontent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:Replace/colorsheet.dart';
-import 'package:Replace/pages/widgets/navbar.dart';
-
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class HomePage extends StatefulWidget{
   String collapsedText;
@@ -63,7 +61,17 @@ class HomeState extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-
+    var text = new RichText( textAlign: TextAlign.left,
+      text: new TextSpan(
+        // Note: Styles for TextSpans must be explicitly defined.
+        // Child text spans will inherit styles from parent
+        style: Theme.of(context).textTheme.title.merge(TextStyle(fontSize: 30)),
+        children: <TextSpan>[
+          new TextSpan(text: 'Submit your own ', style: TextStyle(fontWeight: FontWeight.w100)),
+          new TextSpan(text: "content", style: new TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
         FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).backgroundColor);
     FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).backgroundColor);
 
@@ -81,7 +89,7 @@ class HomeState extends State<HomePage>{
         parallaxEnabled: true,
         backdropTapClosesPanel: true,
         backdropEnabled: true,
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).cardColor,
         panel: Padding(padding: EdgeInsets.only(top: 70, left: 20, right: 20),child: Center(child: Column(children: <Widget>[
           GestureDetector(child: qr, onTap: (){
             print("Refreshing: to " + currentTVID);
@@ -103,13 +111,21 @@ class HomeState extends State<HomePage>{
               child:
               Center(
                 child:
+
                    Container(
                       margin: EdgeInsets.only(top: 100), child:
-                   ListView.builder(itemCount: arr.length, itemBuilder: (context,  index){
+                   ListView.builder(itemCount: arr.length + 1,cacheExtent: 1500 * 3.0, itemBuilder: (context,  index){
 //                        return Text(index.toString());
-                        return ChannelView(mode: arr[index],);
+                   if(index == arr.length){
+                      return
+                        Padding(padding: EdgeInsets.only(bottom: 100), child: Container(child:Column(children: <Widget>[
+                          text,
+                          UserGeneratedContentWidget(),
 
-                        //return Container(child: Text( (index.toString() + " INDEX")),);
+                        ],),),);
+                   }
+                   else return ChannelView(mode: arr[index],);
+
                    }, scrollDirection: Axis.vertical, physics: BouncingScrollPhysics(),)
                   ,
                 padding: EdgeInsets.only(top: 20, bottom: 20),),

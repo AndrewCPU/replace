@@ -1,16 +1,24 @@
-import 'dart:math';
-
-import 'package:Replace/colorsheet.dart';
 import 'package:Replace/network/YoutubeConnection.dart';
 import 'package:Replace/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class YouTubeEntry extends StatelessWidget{
+
+class YoutubeEntry extends StatefulWidget{
   String videoTitle;
   String videoURL;
+  YoutubeEntry({this.videoTitle, this.videoURL});
 
-  YouTubeEntry({this.videoTitle, this.videoURL});
+  @override
+  State createState() => _YouTubeEntryState(videoTitle: videoTitle, videoURL: videoURL);
+}
+
+class _YouTubeEntryState extends State<YoutubeEntry>{
+  String videoTitle;
+  String videoURL;
+  bool voted = false;
+
+  _YouTubeEntryState({this.videoTitle, this.videoURL});
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +35,16 @@ class YouTubeEntry extends StatelessWidget{
       child:
       Container(width: cardWidth, child: ListTile(//https://www.youtube.com/results?search_query=24+7+live+stream
         title:
-        Card(shape: RoundedRectangleBorder (borderRadius: BorderRadius.circular(30)), color: Theme.of(context).backgroundColor,elevation: 5,
+        Card(shape: RoundedRectangleBorder (borderRadius: BorderRadius.circular(30)),elevation: 5,
           child:
           Container(height: 300, child:
           Column(children: <Widget>[
             Padding(padding: EdgeInsets.only(bottom: 10), child:img,),
             Row(children: <Widget>[
-              Container(width: cardWidth / 3.4, child: Center(child: IconButton(icon: Icon(Icons.keyboard_arrow_up)),),),
-              Container(width: cardWidth / 3.4, child: Center(child: Text("0 "),),),
-              Container(width: cardWidth / 3.4, child: Center(child: IconButton(icon: Icon(Icons.keyboard_arrow_down)),),),
-            ],)
+              Container(width: cardWidth / 3.55, child: SizedBox(child: Center(child: Text("0"),), width: cardWidth / 3,),),
+              Container(width: cardWidth / 3.55, child: SizedBox(child: Center(child: IconButton(icon: Icon(Icons.keyboard_arrow_up), color: Colors.greenAccent, onPressed: () => vote(1),),), width: cardWidth / 3,),),
+              Container(width: cardWidth / 3.55, child: SizedBox(child: Center(child: IconButton(icon: Icon(Icons.keyboard_arrow_down), color: Colors.redAccent, onPressed: () => vote(-1),),), width: cardWidth / 3,),),
+            ],),
 
           ]),)
         ),
@@ -48,6 +56,13 @@ class YouTubeEntry extends StatelessWidget{
     var tvID = HomeState.currentTVID;
     YoutubeConnection.get("http://replace.live:3000/control/play_video?tvID=$tvID&channelID=$a", (response){
 
+    });
+  }
+
+  void vote(int i) {
+
+    setState(() {
+      voted = true;
     });
   }
 }
