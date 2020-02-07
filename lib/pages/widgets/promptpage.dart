@@ -1,3 +1,4 @@
+import 'package:Replace/pages/widgets/animatedbackground.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
@@ -29,12 +30,12 @@ class PromptState extends State<PromptPage>{
 
     Size size = MediaQuery.of(context).size;
 
-    Container logoContainer = Container(child:  Image.network("https://i.ya-webdesign.com/images/r-logo-png-12.png", height: size.height / 4,), margin: EdgeInsets.only(top: kBottomNavigationBarHeight / 8),);
+    Container logoContainer = Container(child:  Image.network("http://replace.live/bigr/logo.jpg", height: size.height / 4,), margin: EdgeInsets.only(top: 35, bottom: 85),);
 
     Hero logo = Hero(tag: "logo",child: logoContainer,);
 
     Card card = Card(child: Container( padding: EdgeInsets.all(10),child:child));
     SizedBox sizedBox = SizedBox(child: card, width: size.width <= 700 ? size.width : size.width / 2,);
-    return Scaffold(body: Center(child: Column(children: <Widget>[logo, sizedBox],)), backgroundColor: Theme.of(context).backgroundColor,);
+    return Scaffold(body: Stack(children: <Widget>[AnimatedBackground(), Center(child: Column(children: <Widget>[logo, sizedBox],))],), backgroundColor: Theme.of(context).backgroundColor,);
   }
 }

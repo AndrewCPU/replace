@@ -1,3 +1,4 @@
+import 'package:cache_image/cache_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,10 @@ class NavigationState extends State<NavigationBar>{
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     double statusBarHeight = MediaQuery.of(context).padding.top;
-    Container logoContainer = Container(child:  Image.network("https://i.ya-webdesign.com/images/r-logo-png-12.png", height: h / 15,), margin: EdgeInsets.only(top: kBottomNavigationBarHeight / 8),);
+    Container logoContainer = Container(child:  Image(
+      fit: BoxFit.cover,
+      image: CacheImage('http://replace.live/bigr/ilogo.jpg'),
+    ), padding: EdgeInsets.all(kBottomNavigationBarHeight / 8),);
 
     Hero logo = Hero(tag: "logo",child: logoContainer,);
     return Positioned(top: statusBarHeight, left: 0, child: Center(

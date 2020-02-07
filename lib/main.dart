@@ -1,3 +1,4 @@
+import 'package:Replace/pages/widgets/animatedbackground.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
@@ -164,10 +165,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Container logoContainer = Container(
       child: Image.network(
-        "https://i.ya-webdesign.com/images/r-logo-png-12.png",
+        "http://replace.live/bigr/logo.jpg",
         height: size.height / 3,
       ),
-      margin: EdgeInsets.only(top: kBottomNavigationBarHeight / 8),
+      margin: EdgeInsets.only(top: 50),
     );
 
     Hero logo = Hero(
@@ -178,6 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
+          AnimatedBackground(),
           Center(
             child: Column(
               children: <Widget>[

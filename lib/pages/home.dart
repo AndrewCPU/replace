@@ -105,7 +105,6 @@ class HomeState extends State<HomePage>{
         collapsed: Center(child: OutlineButton( onPressed: open,child: Text(this.collapsedText, style: TextStyle(fontWeight: FontWeight.bold),))),
         body: Stack(children: <Widget>[
 
-
 //          IndexedStack(children: <Widget>[SizedBox(child: VideoPlayer(), width: size.width, height: size.height / 2)],),
             new Container(
               child:
