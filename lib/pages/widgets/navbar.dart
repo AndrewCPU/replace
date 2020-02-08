@@ -19,8 +19,9 @@ class NavigationState extends State<NavigationBar>{
     double statusBarHeight = MediaQuery.of(context).padding.top;
     Container logoContainer = Container(child:  Image(
       fit: BoxFit.cover,
-      image: CacheImage('http://replace.live/bigr/ilogo.jpg'),
-    ), padding: EdgeInsets.all(kBottomNavigationBarHeight / 8),);
+      image: CacheImage('http://replace.live/bigr/ilogo.jpg', scale: 1),
+      width: 40,
+    ),margin: EdgeInsets.only(right: 10, left: 10),);
 
     Hero logo = Hero(tag: "logo",child: logoContainer,);
     return Positioned(top: statusBarHeight, left: 0, child: Center(
@@ -29,7 +30,7 @@ class NavigationState extends State<NavigationBar>{
           child:
           Container(
             decoration:
-            BoxDecoration(color: Theme.of(context).backgroundColor, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30))),
+            BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30))),
             child:
         Row(children: <Widget>[
       logo, Center(child:Padding(padding: EdgeInsets.all(10),child:Text("Replace DOT Live", style: Theme.of(context).textTheme.title,) ,)

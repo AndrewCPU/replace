@@ -45,7 +45,10 @@ class MyApp extends StatelessWidget {
         backgroundColor: white,
         accentColor: Colors.cyan,
       ),
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: Colors.deepPurple
+      ),
       home: MyHomePage(title: 'Login'),
     );
   }
@@ -89,9 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).backgroundColor);
+    FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).cardColor);
     FlutterStatusbarcolor.setNavigationBarColor(
-        Theme.of(context).backgroundColor);
+        Theme.of(context).cardColor);
 
     Text title = Text(
       "Welcome to REPLACE",

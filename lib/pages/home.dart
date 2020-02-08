@@ -72,8 +72,8 @@ class HomeState extends State<HomePage>{
         ],
       ),
     );
-        FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).backgroundColor);
-    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).backgroundColor);
+    FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).cardColor);
+    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).cardColor);
 
     Size size = MediaQuery.of(context).size;
 
