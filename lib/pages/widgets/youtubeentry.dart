@@ -1,17 +1,36 @@
+import 'dart:math';
+
 import 'package:Replace/network/YoutubeConnection.dart';
 import 'package:Replace/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class YoutubeEntry extends StatefulWidget {
+class YoutubeEntry extends StatefulWidget with Comparable {
   String videoTitle;
   String videoURL;
+  int votes = 0;
 
-  YoutubeEntry({this.videoTitle, this.videoURL});
+  YoutubeEntry({this.videoTitle, this.videoURL}){
+    //todo get votes
+    this.votes = new Random().nextInt(1000);
+  }
 
   @override
   State createState() =>
-      _YouTubeEntryState(videoTitle: videoTitle, videoURL: videoURL);
+      _YouTubeEntryState(videoTitle: videoTitle, videoURL: videoURL, votes: votes);
+
+  @override
+  int compareTo(dynamic other) {
+    if(other is YoutubeEntry ){
+      if(other.votes > this.votes) {
+        return 1;
+      }
+      else{
+        return -1;
+      }
+    }
+    return 0;
+  }
 }
 
 class _YouTubeEntryState extends State<YoutubeEntry>
@@ -19,9 +38,10 @@ class _YouTubeEntryState extends State<YoutubeEntry>
   String videoTitle;
   String videoURL;
   bool voted = false;
+  int votes;
   AnimationController _controller;
 
-  _YouTubeEntryState({this.videoTitle, this.videoURL});
+  _YouTubeEntryState({this.videoTitle, this.videoURL, this.votes});
 
   @override
   void initState() {
@@ -30,7 +50,7 @@ class _YouTubeEntryState extends State<YoutubeEntry>
     _controller = AnimationController(
         duration: const Duration(milliseconds: 500),
         vsync: this,
-        reverseDuration: const Duration(milliseconds: 200));
+        reverseDuration: const Duration(milliseconds: 300));
     _controller.reset();
   }
 
@@ -38,7 +58,7 @@ class _YouTubeEntryState extends State<YoutubeEntry>
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width / 1.15;
     Widget img =
-        Image.network("https://img.youtube.com/vi/$videoURL/hqdefault.jpg");
+        Image.network("https://img.youtube.com/vi/$videoURL/hqdefault.jpg",scale: 0.2, fit: BoxFit.fill,);
     img = ClipRRect(
       borderRadius: BorderRadius.circular(30.0),
       child: img,
@@ -51,7 +71,7 @@ class _YouTubeEntryState extends State<YoutubeEntry>
         playEpisode(videoURL);
       },
       child: ScaleTransition(
-          scale: Tween(begin: 1.0, end: 1.05).animate(
+          scale: Tween(begin: 1.0, end: 1.08).animate(
               CurvedAnimation(parent: _controller, curve: Curves.easeOutQuart)),
           child: Container(
             width: cardWidth,
@@ -74,7 +94,7 @@ class _YouTubeEntryState extends State<YoutubeEntry>
                           width: cardWidth / 3.55,
                           child: SizedBox(
                             child: Center(
-                              child: Text("0"),
+                              child: Text(votes.toString()),
                             ),
                             width: cardWidth / 3,
                           ),
@@ -128,4 +148,6 @@ class _YouTubeEntryState extends State<YoutubeEntry>
       voted = true;
     });
   }
+
+
 }

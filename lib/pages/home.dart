@@ -78,10 +78,11 @@ class HomeState extends State<HomePage>{
     Size size = MediaQuery.of(context).size;
 
 
-    var arr = ["cartoons","news","music", "edm", "weather", "games streaming", "art", "programming", "video gaming", "minecraft", "music videos"];
+    var arr = ["cartoons","news","music", "edm", "weather",  "art", "music videos"];
 
 //    SizedBox sizedBox = SizedBox(child: card, width: size.width <= 700 ? size.width : size.width / 2,);
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Theme.of(context).backgroundColor,
       body: SlidingUpPanel(
         controller: panelController,

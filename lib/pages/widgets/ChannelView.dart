@@ -37,7 +37,8 @@ class _ChannelState extends State<ChannelView>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    
+
+    channels.sort((a, b) => (a as YoutubeEntry).compareTo(b as YoutubeEntry));
     
     var words = ["Watch","Enjoy","View","Observe","Check","Study","Inspect","Examine","Behold"];
     
@@ -55,9 +56,9 @@ class _ChannelState extends State<ChannelView>{
 
     return Column(children: <Widget>[
       text,
-      Container(child: ListView(physics: BouncingScrollPhysics(),
+      Container(margin: EdgeInsets.only(top: 30, bottom: 35), child: ListView(physics: BouncingScrollPhysics(),
         children: channels,
-        padding: EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.only(bottom: 10,top: 20),
         scrollDirection: Axis.horizontal,), width: MediaQuery.of(context).size.width, height: 400,)
     ],);
 

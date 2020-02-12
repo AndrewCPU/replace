@@ -34,8 +34,9 @@ class PromptState extends State<PromptPage>{
 
     Hero logo = Hero(tag: "logo",child: logoContainer,);
 
-    Card card = Card(child: Container( padding: EdgeInsets.all(10),child:child));
+    Card card = Card(child: Container( padding: EdgeInsets.all(10),child:child), color: Colors.transparent,);
     SizedBox sizedBox = SizedBox(child: card, width: size.width <= 700 ? size.width : size.width / 2,);
-    return Scaffold(body: Stack(children: <Widget>[AnimatedBackground(), Center(child: Column(children: <Widget>[logo, sizedBox],))],), backgroundColor: Theme.of(context).backgroundColor,);
+    return Scaffold(      resizeToAvoidBottomInset: true, resizeToAvoidBottomPadding: true,
+      body: Stack(children: <Widget>[AnimatedBackground(), Center(child: Column(children: <Widget>[logo, sizedBox],))],), backgroundColor: Theme.of(context).backgroundColor,);
   }
 }

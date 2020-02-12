@@ -14,9 +14,9 @@ class AnimatedBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     final tween = MultiTrackTween([
       Track("color1").add(Duration(seconds: 10),
-          ColorTween(begin: Color(0xffD38312), end: Colors.lightBlue.shade900)),
+          ColorTween(begin: Color(0xff5F0A87), end: Colors.lightBlue.shade900)),
       Track("color2").add(Duration(seconds: 10),
-          ColorTween(begin: Color(0xffA83279), end: Colors.greenAccent))
+          ColorTween(begin: Color(0xffA4508B), end: Colors.lightBlue.shade900))
     ]);
     return ControlledAnimation(
       playback: Playback.MIRROR,
