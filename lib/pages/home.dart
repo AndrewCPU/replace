@@ -44,6 +44,7 @@ class HomeState extends State<HomePage>{
 //    FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).backgroundColor);
 //    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).backgroundColor);
     FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+    //todo get currentTVID (qrCode) from state
     qr = QrImage(
       data: "$currentTVID",
       version: QrVersions.auto,
@@ -141,6 +142,14 @@ class HomeState extends State<HomePage>{
   void open(){
     panelController.open();
   }
+
+  void saveLocally(qrCode) async{
+    //https://github.com/flutter/plugins/tree/master/packages/shared_preferences/shared_preferences
+    /*
+    todo save QR CODE string and load it on app start
+     */
+  }
+
   void updateQR() {
     print("UPDATE");
     scanner.scan().then((resp){
@@ -153,6 +162,8 @@ class HomeState extends State<HomePage>{
             version: QrVersions.auto,
             size: 200.0,
           );
+          //todo save
+          saveLocally(currentTVID);
         });
     }).whenComplete(() {
       setState(() {
