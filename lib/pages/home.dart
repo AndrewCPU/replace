@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class HomePage extends StatefulWidget{
@@ -45,6 +46,11 @@ class HomeState extends State<HomePage>{
 //    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).backgroundColor);
     FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
     //todo get currentTVID (qrCode) from state
+    SharedPreferences.getInstance().then((prefs){
+      setState(() {
+        currentTVID = prefs.getString("qrcode");
+      });
+    });
     qr = QrImage(
       data: "$currentTVID",
       version: QrVersions.auto,
@@ -148,7 +154,12 @@ class HomeState extends State<HomePage>{
     /*
     todo save QR CODE string and load it on app start
      */
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('qrcode', qrCode);
   }
+
+
+
 
   void updateQR() {
     print("UPDATE");
