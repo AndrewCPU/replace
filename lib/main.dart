@@ -46,9 +46,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.cyan,
       ),
       darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          primarySwatch: Colors.deepPurple
-      ),
+          brightness: Brightness.dark, primarySwatch: Colors.deepPurple),
       home: MyHomePage(title: 'Login'),
     );
   }
@@ -93,8 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).cardColor);
-    FlutterStatusbarcolor.setNavigationBarColor(
-        Theme.of(context).cardColor);
+    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).cardColor);
 
     Text title = Text(
       "Welcome to REPLACE",
@@ -149,23 +146,23 @@ class _MyHomePageState extends State<MyHomePage> {
           side: BorderSide(color: Colors.white70)),
     );
 
-    login = Padding(
-      padding: EdgeInsets.all(20),
+    login = Container(
+      padding: EdgeInsets.only(top: 20),
       child: login,
     );
-    register = Padding(
-      padding: EdgeInsets.all(20),
+    register = Container(
+      padding: EdgeInsets.only(top: 20),
       child: register,
     );
-    subscribe = Padding(
-      padding: EdgeInsets.all(20),
+    subscribe = Container(
+      padding: EdgeInsets.only(top: 20),
       child: subscribe,
     );
 
     Container options = Container(
-        height: size.height / 3,
-        margin: EdgeInsets.only(top: size.height / 4),
-        child: ListView(children: <Widget>[(login), register, subscribe]));
+        height: size.height / 2,
+        //margin: EdgeInsets.only(top: size.height / 4),
+        child: Column(children: <Widget>[(login), register, subscribe]));
 
     Container logoContainer = Container(
       child: Image.network(
