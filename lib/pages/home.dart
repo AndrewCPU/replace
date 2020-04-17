@@ -70,9 +70,13 @@ class HomeState extends State<HomePage> {
     1: Text('Tab 2'),
     2: Text('Tab 3'),
   };
+  static void logout(){
 
+  }
   List<Widget> tabViews = [
-    ScanQrView(),
+    FlatButton(child: Text("Logout"), onPressed: (){
+      logout();
+    },),
     ScanQrView(),
     page3(),
   ];

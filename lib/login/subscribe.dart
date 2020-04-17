@@ -59,7 +59,7 @@ class _SubscribePageState extends State<SubscribePage> {
         return WebHomePage();
       }));
     }
-    else{
+    else {
       _controller.text = "Invalid email";
     }
   }
