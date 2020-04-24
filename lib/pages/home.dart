@@ -1,5 +1,4 @@
 import 'package:Replace/network/YoutubeConnection.dart';
-import 'package:Replace/pages/NavigationBar/page3.dart';
 import 'package:Replace/pages/widgets/ChannelView.dart';
 import 'package:Replace/pages/widgets/appbar.dart';
 import 'package:Replace/pages/widgets/usercontent.dart';
@@ -11,6 +10,9 @@ import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:Replace/pages/NavigationBar/scanqr.dart';
+
+import 'NavigationBar/playlistpage.dart';
+import 'NavigationBar/settingspage.dart';
 
 class HomePage extends StatefulWidget {
   String collapsedText;
@@ -66,19 +68,15 @@ class HomeState extends State<HomePage> {
   int selectedTab = 1;
 
   final Map<int, Widget> tabSections = const <int, Widget>{
-    0: Text('Tab 1'),
-    1: Text('Tab 2'),
-    2: Text('Tab 3'),
+    0: Text('Settings'), //tab 1
+    1: Text('Scan'), //tab 2
+    2: Text('Playlists'), //tab 3
   };
-  static void logout(){
 
-  }
   List<Widget> tabViews = [
-    FlatButton(child: Text("Logout"), onPressed: (){
-      logout();
-    },),
+    SettingsPage(),
     ScanQrView(),
-    page3(),
+    PlaylistPage(),
   ];
 
   //page swipe

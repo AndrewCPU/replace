@@ -32,7 +32,6 @@ class _ScanQrViewState extends State<ScanQrView> {
             onPressed: () {
               qrGetter.updateQR();
             }),
-        Text('Page 2')
       ],
     );
   }
