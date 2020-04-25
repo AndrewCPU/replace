@@ -131,16 +131,3 @@ class _PlaylistPageState extends State<PlaylistPage> {
   }
 }
 
-class Playlist {
-  final String playlistName;
-  final List<String> playlistChannels;
-
-  Playlist({this.playlistName, this.playlistChannels});
-
-  Map<String, dynamic> toMap() {
-    return {
-      "playlistName": this.playlistName,
-      "playlistChannels": this.playlistChannels,
-    };
-  }
-}
