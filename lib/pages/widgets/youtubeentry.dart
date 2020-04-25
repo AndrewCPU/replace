@@ -10,22 +10,21 @@ class YoutubeEntry extends StatefulWidget with Comparable {
   String videoURL;
   int votes = 0;
 
-  YoutubeEntry({this.videoTitle, this.videoURL}){
+  YoutubeEntry({this.videoTitle, this.videoURL}) {
     //todo get votes
     this.votes = new Random().nextInt(1000);
   }
 
   @override
-  State createState() =>
-      _YouTubeEntryState(videoTitle: videoTitle, videoURL: videoURL, votes: votes);
+  State createState() => _YouTubeEntryState(
+      videoTitle: videoTitle, videoURL: videoURL, votes: votes);
 
   @override
   int compareTo(dynamic other) {
-    if(other is YoutubeEntry ){
-      if(other.votes > this.votes) {
+    if (other is YoutubeEntry) {
+      if (other.votes > this.votes) {
         return 1;
-      }
-      else{
+      } else {
         return -1;
       }
     }
@@ -46,7 +45,6 @@ class _YouTubeEntryState extends State<YoutubeEntry>
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
         duration: const Duration(milliseconds: 500),
         vsync: this,
@@ -57,8 +55,11 @@ class _YouTubeEntryState extends State<YoutubeEntry>
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width / 1.15;
-    Widget img =
-        Image.network("https://img.youtube.com/vi/$videoURL/hqdefault.jpg",scale: 0.2, fit: BoxFit.fill,);
+    Widget img = Image.network(
+      "https://img.youtube.com/vi/$videoURL/hqdefault.jpg",
+      scale: 0.2,
+      fit: BoxFit.fill,
+    );
     img = ClipRRect(
       borderRadius: BorderRadius.circular(30.0),
       child: img,
@@ -148,6 +149,4 @@ class _YouTubeEntryState extends State<YoutubeEntry>
       voted = true;
     });
   }
-
-
 }
