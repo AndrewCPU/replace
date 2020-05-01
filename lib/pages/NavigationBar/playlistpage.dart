@@ -1,4 +1,6 @@
+import 'package:Replace/pages/NavigationBar/playlist.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaylistPage extends StatefulWidget {
   @override
@@ -124,5 +126,16 @@ class _PlaylistPageState extends State<PlaylistPage> {
   void addPlaylist() {
     //TODO, maybe pop up a box to input a playlist name
     print('add playlist');
+  }
+
+  void loadPlaylists() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> playlistNames = prefs.getStringList("playlists");
+    for (String playlistName in playlistNames) {
+      List<String> playlistContent =
+          prefs.getStringList("playlist.$playlistName");
+      Playlist playlist = Playlist(
+          playlistName: playlistName, playlistChannels: playlistContent);
+    }
   }
 }
