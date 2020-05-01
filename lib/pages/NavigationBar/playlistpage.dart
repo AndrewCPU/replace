@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart' as path;
 
 class PlaylistPage extends StatefulWidget {
   @override
@@ -17,16 +15,6 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget img = Image.network(
-      "https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/flutter-512.png",
-      //"https://img.youtube.com/vi/$videoURL/hqdefault.jpg",
-      scale: 0.2,
-      fit: BoxFit.fill,
-    );
-    img = ClipRRect(
-      borderRadius: BorderRadius.circular(30.0),
-      child: img,
-    );
     return SingleChildScrollView(
       physics: ScrollPhysics(),
       child: Container(
@@ -59,7 +47,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                   )
                 ],
               ),
-              playlistList(img),
+              playlistList(),
             ],
           ),
         ),
@@ -67,17 +55,17 @@ class _PlaylistPageState extends State<PlaylistPage> {
     );
   }
 
-  Widget playlistList(img) {
+  Widget playlistList() {
     return ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: playlists.length,
         itemBuilder: (context, index) {
-          return playlistChannels(index, img);
+          return playlistChannels(index);
         });
   }
 
-  Widget playlistChannels(index, img) {
+  Widget playlistChannels(index) {
     return Container(
       margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * .02),
       child: Column(
@@ -92,7 +80,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
               physics: BouncingScrollPhysics(),
               itemCount: playlists.length,
               itemBuilder: (context, index) {
-                return playlistCard(index, img);
+                return playlistCard(index);
               },
               scrollDirection: Axis.horizontal,
             ),
@@ -103,7 +91,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
     );
   }
 
-  Widget playlistCard(index, img) {
+  Widget playlistCard(index) {
     return Container(
         width: MediaQuery.of(context).size.width * .8,
         child: InkWell(
@@ -117,8 +105,16 @@ class _PlaylistPageState extends State<PlaylistPage> {
                 Text("video"),
                 Container(
                   height: MediaQuery.of(context).size.height * .1,
-                  child: img,
-                )
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: Image.network(
+                      "https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/flutter-512.png",
+                      //"https://img.youtube.com/vi/$videoURL/hqdefault.jpg",
+                      scale: 0.2,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -130,4 +126,3 @@ class _PlaylistPageState extends State<PlaylistPage> {
     print('add playlist');
   }
 }
-

@@ -12,27 +12,44 @@ class _ScanQrViewState extends State<ScanQrView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        GestureDetector(
-          child: qrGetter.qr,
-          onTap: () {
-            print("Refreshing: to " + HomeState.currentTVID);
-            setState(() {
-              qrGetter.qr = QrImage(
-                data: HomeState.currentTVID,
-                version: QrVersions.auto,
-                size: 200.0,
-              );
-            });
-          },
-        ),
-        OutlineButton(
-            child: Text("Scan a TV"),
-            onPressed: () {
-              qrGetter.updateQR();
-            }),
-      ],
+    return Container(
+      margin: EdgeInsets.only(
+        top: MediaQuery.of(context).size.height * .05,
+        bottom: MediaQuery.of(context).size.height * .05,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Connect',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.height * .05),
+          ),
+          Center(
+            child: GestureDetector(
+              child: qrGetter.qr,
+              onTap: () {
+                print("Refreshing: to " + HomeState.currentTVID);
+                setState(() {
+                  qrGetter.qr = QrImage(
+                    data: HomeState.currentTVID,
+                    version: QrVersions.auto,
+                    size: 200.0,
+                  );
+                });
+              },
+            ),
+          ),
+          Center(
+            child: OutlineButton(
+                child: Text("Scan a TV"),
+                onPressed: () {
+                  qrGetter.updateQR();
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

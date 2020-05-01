@@ -1,3 +1,4 @@
+import 'package:Replace/pages/home.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -6,8 +7,14 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  String tvID = HomeState.currentTVID;
   @override
   Widget build(BuildContext context) {
+    if (tvID == null) {
+      setState(() {
+        tvID = 'Currently not connected';
+      });
+    }
     return SingleChildScrollView(
       physics: ScrollPhysics(),
       child: Container(
@@ -18,31 +25,41 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  'Account',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.height * .05),
-                ),
-                FlatButton.icon(
-                  icon: Icon(Icons.person),
-                  label: Text("Logout"),
-                  onPressed: () {
-                    logout();
-                  },
-                )
-              ],
+            Text(
+              'Account',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: MediaQuery.of(context).size.height * .05),
             ),
+            //TODO Save UID/email with shared pref maybe
             Text('UserID:'),
             Text('Email:'),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .03,
+            ),
+            Text(
+              'Settings',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: MediaQuery.of(context).size.height * .03),
+            ),
+            //TODO perhaps add option to create a unqie name for connected TVs
+            Text('Connected TV:'),
+            Text('Current QR ID: ${tvID}'),
+            FlatButton.icon(
+              icon: Icon(Icons.person),
+              label: Text("Logout"),
+              onPressed: () {
+                logout();
+              },
+            )
           ],
         ),
       ),
     );
   }
 
-  static void logout() {}
+  void logout() {
+    print('Logged out');
+  }
 }
