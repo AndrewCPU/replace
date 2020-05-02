@@ -7,44 +7,55 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import '../colorsheet.dart';
 import 'login.dart';
 
-class RegisterPage extends StatefulWidget{
+class RegisterPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => RegisterState();
-
 }
 
-class RegisterState extends State<RegisterPage>{
+class RegisterState extends State<RegisterPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  void initState(){
+  void initState() {
     FlutterStatusbarcolor.setStatusBarColor(Colorsheet.background);
     FlutterStatusbarcolor.setNavigationBarColor(Colorsheet.background);
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    TextFormField username = TextFormField(controller: usernameController, decoration: InputDecoration(
-      labelText: "Username",
-    ),);
-    TextFormField password = TextFormField(controller: passwordController, decoration: InputDecoration(
-      labelText: "Password",
-    ), obscureText: true,);
+    TextFormField username = TextFormField(
+      controller: usernameController,
+      decoration: InputDecoration(
+        labelText: "Username",
+      ),
+    );
+    TextFormField password = TextFormField(
+      controller: passwordController,
+      decoration: InputDecoration(
+        labelText: "Password",
+      ),
+      obscureText: true,
+    );
 
-    FlatButton RegisterButton = FlatButton(child: Text("Register"), onPressed: register,);
-    return PromptPage(child: Column(children: <Widget>[
-      username, password, RegisterButton
-    ],),);
+    FlatButton registerButton = FlatButton(
+      child: Text("Register"),
+      onPressed: register,
+    );
+    return PromptPage(
+      child: Column(
+        children: <Widget>[username, password, registerButton],
+      ),
+    );
   }
 
-  void register(){
-     String username = usernameController.text;
-     String password = passwordController.text;
-     Authentication authentication = Authentication();
-     authentication.registerUser(username, password);
-     Navigator.push(context, MaterialPageRoute(builder: (_) {
-       return LoginPage();
-     }));
+  void register() {
+    String username = usernameController.text;
+    String password = passwordController.text;
+    Authentication authentication = Authentication();
+    authentication.registerUser(username, password);
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return LoginPage();
+    }));
   }
-
 }

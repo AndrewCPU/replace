@@ -7,7 +7,6 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 import '../colorsheet.dart';
 
-
 class SubscribePage extends StatefulWidget {
   void initState() {
     FlutterStatusbarcolor.setStatusBarColor(Colorsheet.background);
@@ -41,25 +40,24 @@ class _SubscribePageState extends State<SubscribePage> {
       ),
     );
 
-    FlatButton SubscribeButton = FlatButton(
+    FlatButton subscribeButton = FlatButton(
       child: Text("Subscribe"),
       onPressed: subscribe,
     );
     return PromptPage(
       child: Column(
-        children: <Widget>[mailing, email, name, SubscribeButton],
+        children: <Widget>[mailing, email, name, subscribeButton],
       ),
     );
   }
 
   void subscribe() {
     bool valid = EmailValidator.validate(_controller.text);
-    if(valid) {
+    if (valid) {
       Navigator.push(context, MaterialPageRoute(builder: (_) {
         return WebHomePage();
       }));
-    }
-    else {
+    } else {
       _controller.text = "Invalid email";
     }
   }

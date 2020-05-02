@@ -13,30 +13,56 @@ class PromptPage extends StatefulWidget {
   State createState() => PromptState(child: child);
 }
 
-class PromptState extends State<PromptPage>{
+class PromptState extends State<PromptPage> {
   Widget child;
-  PromptState({this.child}){
-      FlutterStatusbarcolor.setStatusBarColor(Colorsheet.background);
-      FlutterStatusbarcolor.setNavigationBarColor(Colorsheet.background);
-      FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+  PromptState({this.child}) {
+    FlutterStatusbarcolor.setStatusBarColor(Colorsheet.background);
+    FlutterStatusbarcolor.setNavigationBarColor(Colorsheet.background);
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
   }
 
   @override
   Widget build(BuildContext context) {
-
     FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).backgroundColor);
-    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).backgroundColor);
-
+    FlutterStatusbarcolor.setNavigationBarColor(
+        Theme.of(context).backgroundColor);
 
     Size size = MediaQuery.of(context).size;
 
-    Container logoContainer = Container(child:  Image.network("http://replace.live/bigr/logo.jpg", height: size.height / 4,), margin: EdgeInsets.only(top: 35, bottom: 85),);
+    Container logoContainer = Container(
+      child: Image.network(
+        "http://replace.live/bigr/logo.jpg",
+        height: size.height / 4,
+      ),
+      margin: EdgeInsets.only(top: 35, bottom: 85),
+    );
 
-    Hero logo = Hero(tag: "logo",child: logoContainer,);
+    Hero logo = Hero(
+      tag: "logo",
+      child: logoContainer,
+    );
 
-    Card card = Card(child: Container( padding: EdgeInsets.all(10),child:child), color: Theme.of(context).cardColor,);
-    SizedBox sizedBox = SizedBox(child: card, width: size.width <= 700 ? size.width : size.width / 2,);
-    return Scaffold(      resizeToAvoidBottomInset: true, resizeToAvoidBottomPadding: true,
-      body: Stack(children: <Widget>[AnimatedBackground(), Center(child: Column(children: <Widget>[logo, sizedBox],))],), backgroundColor: Theme.of(context).backgroundColor,);
+    Card card = Card(
+      child: Container(padding: EdgeInsets.all(10), child: child),
+      color: Theme.of(context).cardColor,
+    );
+    SizedBox sizedBox = SizedBox(
+      child: card,
+      width: size.width <= 700 ? size.width : size.width / 2,
+    );
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomPadding: true,
+      body: Stack(
+        children: <Widget>[
+          AnimatedBackground(),
+          Center(
+              child: Column(
+            children: <Widget>[logo, sizedBox],
+          ))
+        ],
+      ),
+      backgroundColor: Theme.of(context).backgroundColor,
+    );
   }
 }

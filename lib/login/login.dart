@@ -27,7 +27,6 @@ class LoginState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     TextFormField username = TextFormField(
       controller: usernameController,
       decoration: InputDecoration(
@@ -41,11 +40,11 @@ class LoginState extends State<LoginPage> {
       ),
       obscureText: true,
     );
-    FlatButton LoginButton = FlatButton(
+    FlatButton loginButton = FlatButton(
       child: Text("Login"),
       onPressed: login,
     );
-    MaterialButton ForgotPasswordButton = MaterialButton(
+    MaterialButton forgotPasswordButton = MaterialButton(
       child: Text(
         "Forgot Password?",
         style: TextStyle(
@@ -62,9 +61,9 @@ class LoginState extends State<LoginPage> {
           password,
           Container(
             alignment: Alignment.centerRight,
-            child: ForgotPasswordButton,
+            child: forgotPasswordButton,
           ),
-          LoginButton
+          loginButton
         ],
       ),
     );

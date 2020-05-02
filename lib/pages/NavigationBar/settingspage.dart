@@ -45,7 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             //TODO perhaps add option to create a unqie name for connected TVs
             Text('Connected TV:'),
-            Text('Current QR ID: ${tvID}'),
+            Text('Current QR ID: $tvID'),
             FlatButton.icon(
               icon: Icon(Icons.person),
               label: Text("Logout"),

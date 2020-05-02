@@ -8,12 +8,15 @@ class PlaylistPage extends StatefulWidget {
 }
 
 class _PlaylistPageState extends State<PlaylistPage> {
-  List<String> playlists = [
-    'playlist1',
-    'playlist2',
-    'playlist3',
-    'playlist4',
-  ];
+  List<Playlist> playlists = [];
+  TextEditingController _textEditingController = TextEditingController();
+  PlaylistHelper _playlistHelper = PlaylistHelper();
+
+  @override
+  void initState() {
+    loadPlaylist();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +46,26 @@ class _PlaylistPageState extends State<PlaylistPage> {
                       ),
                     ),
                     onTap: () {
-                      //add new playlists
-                      addPlaylist();
+                      _playlistHelper
+                          .createPlaylistBox(context)
+                          .whenComplete(() {
+                        loadPlaylist();
+                      });
                     },
-                  )
+                  ),
+                  InkWell(
+                    child: Container(
+                      child: Icon(
+                        Icons.remove_red_eye,
+                      ),
+                    ),
+                    onTap: () {
+                      print(playlists);
+                      setState(() {
+                        loadPlaylist();
+                      });
+                    },
+                  ),
                 ],
               ),
               playlistList(),
@@ -68,74 +87,127 @@ class _PlaylistPageState extends State<PlaylistPage> {
   }
 
   Widget playlistChannels(index) {
+    String thisPlaylistName = playlists[index].playlistName;
+    List<String> channelList = playlists[index].playlistChannels;
     return Container(
       margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * .02),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(playlists[index],
-              style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.height * .04)),
+          Row(
+            children: <Widget>[
+              Text(thisPlaylistName,
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * .04)),
+              //TODO REMOVE this test button
+              InkWell(
+                child: Container(
+                  child: Icon(
+                    Icons.remove_red_eye,
+                  ),
+                ),
+                onTap: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  List<String> channels = prefs.getStringList(thisPlaylistName);
+                  print(channels);
+                },
+              ),
+              InkWell(
+                child: Container(
+                  child: Icon(
+                    Icons.close,
+                  ),
+                ),
+                onTap: () {
+                  _playlistHelper
+                      .removePlaylist(thisPlaylistName)
+                      .whenComplete(() {
+                    loadPlaylist();
+                  });
+                },
+              )
+            ],
+          ),
           Container(
             child: ListView.builder(
               shrinkWrap: true,
               physics: BouncingScrollPhysics(),
-              itemCount: playlists.length,
+              itemCount: channelList.length,
               itemBuilder: (context, index) {
-                return playlistCard(index);
+                if (channelList.length != 0) {
+                  return playlistCard(
+                      context, index, thisPlaylistName, channelList);
+                } else {
+                  return Container(
+                    child: Text('No streams in playlist.'),
+                  );
+                }
               },
               scrollDirection: Axis.horizontal,
             ),
-            height: MediaQuery.of(context).size.height * 0.35,
+            height: MediaQuery.of(context).size.height * 0.45,
           ),
         ],
       ),
     );
   }
 
-  Widget playlistCard(index) {
+  Widget playlistCard(context, index, thisPlaylistName, channelList) {
+    String videoURL = channelList[index];
+    //TODO fix card format
     return Container(
-        width: MediaQuery.of(context).size.width * .8,
-        child: InkWell(
+        margin: EdgeInsets.only(right: 10),
+        height: MediaQuery.of(context).size.height * 0.35,
+        width: MediaQuery.of(context).size.width * .75,
+        //TODO add bounce effect
+        child: GestureDetector(
           onTap: () {
-            //brings to new page to view playlist
-            print('playlist test');
+            _playlistHelper.playPlaylistVideo(videoURL);
           },
           child: Card(
             child: Column(
               children: <Widget>[
-                Text("video"),
                 Container(
-                  height: MediaQuery.of(context).size.height * .1,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30.0),
                     child: Image.network(
-                      "https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/flutter-512.png",
-                      //"https://img.youtube.com/vi/$videoURL/hqdefault.jpg",
+                      "https://img.youtube.com/vi/$videoURL/hqdefault.jpg",
                       scale: 0.2,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.fitWidth,
                     ),
                   ),
                 ),
+                Row(
+                  //TODO add upvote/downvote/removefromplaylist
+                  children: <Widget>[
+                    InkWell(
+                      child: Container(
+                        child: Icon(
+                          Icons.close,
+                        ),
+                      ),
+                      onTap: () {
+                        _playlistHelper
+                            .removeFromPlaylist(
+                                videoURL, thisPlaylistName, channelList)
+                            .whenComplete(() {
+                          loadPlaylist();
+                        });
+                      },
+                    )
+                  ],
+                )
               ],
             ),
           ),
         ));
   }
 
-  void addPlaylist() {
-    //TODO, maybe pop up a box to input a playlist name
-    print('add playlist');
-  }
-
-  void loadPlaylists() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> playlistNames = prefs.getStringList("playlists");
-    for (String playlistName in playlistNames) {
-      List<String> playlistContent =
-          prefs.getStringList("playlist.$playlistName");
-      Playlist playlist = Playlist(
-          playlistName: playlistName, playlistChannels: playlistContent);
-    }
+  void loadPlaylist() async {
+    List list = await _playlistHelper.getPlaylists();
+    setState(() {
+      playlists = list;
+    });
   }
 }

@@ -36,13 +36,13 @@ class _ChangePassPageState extends State<ChangePassPage> {
       controller: _controller,
     );
 
-    FlatButton ChangePasswordButton = FlatButton(
+    FlatButton changePasswordButton = FlatButton(
       child: Text("Reset"),
       onPressed: changepassword,
     );
     return PromptPage(
       child: Column(
-        children: <Widget>[mailing, email, ChangePasswordButton],
+        children: <Widget>[mailing, email, changePasswordButton],
       ),
     );
   }

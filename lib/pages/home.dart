@@ -152,6 +152,8 @@ class HomeState extends State<HomePage> {
                       ),
                       Expanded(
                         child: PageView(
+                            //TODO fix swipe feature
+                            physics: NeverScrollableScrollPhysics(),
                             controller: pageController,
                             children: tabViews,
                             onPageChanged: (index) {
