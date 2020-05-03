@@ -40,7 +40,9 @@ class PlaylistHelper {
   }
 
   Future createPlaylist(context) async {
-    if (_textEditingController.text.isNotEmpty) {
+    if (_textEditingController.text.isNotEmpty &&
+        //TVID is stored there
+        _textEditingController.text != 'qrcode') {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       List<String> updatedPlaylist = prefs.getStringList("playlists");
       if (updatedPlaylist == null) {

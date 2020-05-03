@@ -1,14 +1,15 @@
 import 'package:Replace/pages/NavigationBar/playlist.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaylistPage extends StatefulWidget {
   @override
   _PlaylistPageState createState() => _PlaylistPageState();
 }
 
-class _PlaylistPageState extends State<PlaylistPage> {
+class _PlaylistPageState extends State<PlaylistPage>
+    with TickerProviderStateMixin {
   List<Playlist> playlists = [];
+
   TextEditingController _textEditingController = TextEditingController();
   PlaylistHelper _playlistHelper = PlaylistHelper();
 
@@ -56,7 +57,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                   InkWell(
                     child: Container(
                       child: Icon(
-                        Icons.remove_red_eye,
+                        Icons.refresh,
                       ),
                     ),
                     onTap: () {
@@ -99,27 +100,14 @@ class _PlaylistPageState extends State<PlaylistPage> {
               Text(thisPlaylistName,
                   style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * .04)),
-              //TODO REMOVE this test button
               InkWell(
                 child: Container(
                   child: Icon(
-                    Icons.remove_red_eye,
-                  ),
-                ),
-                onTap: () async {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  List<String> channels = prefs.getStringList(thisPlaylistName);
-                  print(channels);
-                },
-              ),
-              InkWell(
-                child: Container(
-                  child: Icon(
-                    Icons.close,
+                    Icons.delete,
                   ),
                 ),
                 onTap: () {
+                  //TODO add alert asking for confirmation
                   _playlistHelper
                       .removePlaylist(thisPlaylistName)
                       .whenComplete(() {
@@ -135,14 +123,9 @@ class _PlaylistPageState extends State<PlaylistPage> {
               physics: BouncingScrollPhysics(),
               itemCount: channelList.length,
               itemBuilder: (context, index) {
-                if (channelList.length != 0) {
-                  return playlistCard(
-                      context, index, thisPlaylistName, channelList);
-                } else {
-                  return Container(
-                    child: Text('No streams in playlist.'),
-                  );
-                }
+                //TODO maybe message if no playlists or streams in a playlist
+                return playlistCard(
+                    context, index, thisPlaylistName, channelList);
               },
               scrollDirection: Axis.horizontal,
             ),
@@ -155,50 +138,87 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   Widget playlistCard(context, index, thisPlaylistName, channelList) {
     String videoURL = channelList[index];
-    //TODO fix card format
+    AnimationController _controller = AnimationController(
+        duration: const Duration(milliseconds: 500),
+        vsync: this,
+        reverseDuration: const Duration(milliseconds: 300));
+    _controller.reset();
     return Container(
         margin: EdgeInsets.only(right: 10),
         height: MediaQuery.of(context).size.height * 0.35,
         width: MediaQuery.of(context).size.width * .75,
-        //TODO add bounce effect
         child: GestureDetector(
           onTap: () {
+            _controller.forward().then((onValue) {
+              _controller.reverse();
+            });
             _playlistHelper.playPlaylistVideo(videoURL);
           },
-          child: Card(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30.0),
-                    child: Image.network(
-                      "https://img.youtube.com/vi/$videoURL/hqdefault.jpg",
-                      scale: 0.2,
-                      fit: BoxFit.fitWidth,
+          child: ScaleTransition(
+            scale: Tween(begin: 1.0, end: 1.08).animate(CurvedAnimation(
+                parent: _controller, curve: Curves.easeOutQuart)),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: Image.network(
+                        "https://img.youtube.com/vi/$videoURL/hqdefault.jpg",
+                        scale: 0.2,
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
                   ),
-                ),
-                Row(
-                  //TODO add upvote/downvote/removefromplaylist
-                  children: <Widget>[
-                    InkWell(
-                      child: Container(
-                        child: Icon(
-                          Icons.close,
+                  Row(
+                    //TODO add upvote/downvote/removefromplaylist
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        child: Text('10'
+                            //votes.toString()
+                            ),
+                      ),
+                      Container(
+                        child: IconButton(
+                          icon: Icon(Icons.keyboard_arrow_up),
+                          color: Colors.greenAccent,
+                          onPressed: () {
+                            //vote(1)
+                          },
                         ),
                       ),
-                      onTap: () {
-                        _playlistHelper
-                            .removeFromPlaylist(
-                                videoURL, thisPlaylistName, channelList)
-                            .whenComplete(() {
-                          loadPlaylist();
-                        });
-                      },
-                    )
-                  ],
-                )
-              ],
+                      Container(
+                        child: IconButton(
+                          icon: Icon(Icons.keyboard_arrow_down),
+                          color: Colors.redAccent,
+                          onPressed: () {
+                            //vote(-1)
+                          },
+                        ),
+                      ),
+                      Container(
+                        child: InkWell(
+                          child: Icon(
+                            Icons.delete,
+                          ),
+                          onTap: () {
+                            //TODO alert for confirmation
+                            _playlistHelper
+                                .removeFromPlaylist(
+                                    videoURL, thisPlaylistName, channelList)
+                                .whenComplete(() {
+                              loadPlaylist();
+                            });
+                          },
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ));

@@ -1,7 +1,6 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:Replace/network/YoutubeConnection.dart';
-import 'package:Replace/pages/NavigationBar/playlist.dart';
-import 'package:Replace/pages/NavigationBar/playlistpage.dart';
 import 'package:Replace/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,9 +41,6 @@ class _YouTubeEntryState extends State<YoutubeEntry>
   int votes;
   AnimationController _controller;
   String selectedPlaylist;
-  PlaylistHelper _playlistHelper = PlaylistHelper();
-  PlaylistPage _playlistPage = PlaylistPage();
-  List<Playlist> playlists = [];
 
   _YouTubeEntryState({this.videoTitle, this.videoURL, this.votes});
 
@@ -192,14 +188,23 @@ class _YouTubeEntryState extends State<YoutubeEntry>
                               });
                             });
                           } else {
-                            //TODO error indicate to select playlist
                             print('select a playlist');
+                            return showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CupertinoAlertDialog(
+                                    title: Text('Please select a playlist'),
+                                  );
+                                });
                           }
                         },
                         child: Text('Add')),
                     FlatButton(
                         onPressed: () {
                           Navigator.of(context).pop();
+                          setState(() {
+                            selectedPlaylist = null;
+                          });
                         },
                         child: Text('Cancel')),
                   ],
@@ -213,14 +218,29 @@ class _YouTubeEntryState extends State<YoutubeEntry>
   Future addToPlaylist(playlistName, videoURL) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> updatedPlaylist = prefs.getStringList(playlistName);
+    print(updatedPlaylist);
     if (updatedPlaylist == null) {
       updatedPlaylist = [videoURL];
+    } else if (updatedPlaylist.contains(videoURL)) {
+      print('already contains this stream');
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: Text(
+                  'Playlist "$playlistName" already contains this stream (videoURL: $videoURL)'),
+            );
+          });
     } else {
       updatedPlaylist.add(videoURL);
     }
     prefs.setStringList(playlistName, updatedPlaylist);
-    print(updatedPlaylist);
+    print('playlistName: $playlistName');
+    print('updated playlist: $updatedPlaylist');
     Navigator.of(context).pop();
+    setState(() {
+      selectedPlaylist = null;
+    });
   }
 
   void playEpisode(String a) {

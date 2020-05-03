@@ -130,8 +130,13 @@ class HomeState extends State<HomePage> {
             backdropTapClosesPanel: true,
             backdropEnabled: true,
             color: Theme.of(context).cardColor,
-            panel: Padding(
-                padding: EdgeInsets.only(top: 70, left: 20, right: 20),
+            minHeight: MediaQuery.of(context).size.height * .15,
+            panel: Container(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * .16,
+                  left: MediaQuery.of(context).size.width * .05,
+                  right: MediaQuery.of(context).size.width * .05,
+                ),
                 child: Center(
                   child: Column(
                     children: <Widget>[
@@ -152,24 +157,27 @@ class HomeState extends State<HomePage> {
                       ),
                       Expanded(
                         child: PageView(
-                            //TODO fix swipe feature
-                            physics: NeverScrollableScrollPhysics(),
+                            //physics: NeverScrollableScrollPhysics(),
                             controller: pageController,
                             children: tabViews,
                             onPageChanged: (index) {
-                              selectedTab = index;
+                              setState(() {
+                                selectedTab = index;
+                              });
                             }),
                       )
                     ],
                   ),
                 )),
-            collapsed: Center(
-                child: OutlineButton(
-                    onPressed: open,
-                    child: Text(
-                      this.collapsedText,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ))),
+            collapsed: Container(
+              child: Center(
+                  child: OutlineButton(
+                      onPressed: open,
+                      child: Text(
+                        this.collapsedText,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ))),
+            ),
             body: Stack(children: <Widget>[
 //          IndexedStack(children: <Widget>[SizedBox(child: VideoPlayer(), width: size.width, height: size.height / 2)],),
               new Container(
