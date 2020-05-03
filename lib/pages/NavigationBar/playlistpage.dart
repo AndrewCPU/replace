@@ -69,6 +69,7 @@ class _PlaylistPageState extends State<PlaylistPage>
                   ),
                 ],
               ),
+              Divider(color: Colors.black),
               playlistList(),
             ],
           ),
@@ -131,6 +132,8 @@ class _PlaylistPageState extends State<PlaylistPage>
             ),
             height: MediaQuery.of(context).size.height * 0.45,
           ),
+          //TODO idk if adding lines is a good idea
+          Divider(color: Colors.black),
         ],
       ),
     );

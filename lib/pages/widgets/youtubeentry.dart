@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:Replace/network/YoutubeConnection.dart';
+import 'package:Replace/pages/NavigationBar/playlistpage.dart';
 import 'package:Replace/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -154,64 +155,69 @@ class _YouTubeEntryState extends State<YoutubeEntry>
       playlistNames = ['defaultplaylist'];
     }
     //TODO notify if there are no playlists to add to
+
     return showDialog(
         context: context,
         builder: (context) {
-          return StatefulBuilder(builder: (context, setState) {
-            return AlertDialog(
-              title: Text('Add To Playlist'),
-              content:
-                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                DropdownButton<String>(
-                  value: selectedPlaylist,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedPlaylist = value;
-                    });
-                  },
-                  items: playlistNames.map<DropdownMenuItem<String>>((value) {
-                    return DropdownMenuItem(
-                      child: Text(value),
-                      value: value,
-                    );
-                  }).toList(),
-                ),
-                Row(
-                  children: <Widget>[
-                    FlatButton(
-                        onPressed: () {
-                          if (selectedPlaylist != null) {
-                            addToPlaylist(selectedPlaylist, videoURL)
-                                .whenComplete(() {
-                              setState(() {
-                                //TODO update playlist view
-                              });
-                            });
-                          } else {
-                            print('select a playlist');
-                            return showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return CupertinoAlertDialog(
-                                    title: Text('Please select a playlist'),
-                                  );
-                                });
-                          }
-                        },
-                        child: Text('Add')),
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          setState(() {
-                            selectedPlaylist = null;
-                          });
-                        },
-                        child: Text('Cancel')),
-                  ],
-                )
-              ]),
+          if (playlistNames.length == 0) {
+            return CupertinoAlertDialog(
+              title: Text('No Playlists Found'),
             );
-          });
+          } else {
+            return AlertDialog(
+              title: Center(
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Choose playlist',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Divider(color: Colors.black)
+                  ],
+                ),
+              ),
+              content: Container(
+                height: MediaQuery.of(context).size.height * .3,
+                child: SingleChildScrollView(
+                  physics: ScrollPhysics(),
+                  child: Scrollbar(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: playlistNames.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              leading: Text('${index + 1})'),
+                              title: Text(playlistNames[index]),
+                              onTap: () {
+                                if (playlistNames[index] != null) {
+                                  addToPlaylist(playlistNames[index], videoURL)
+                                      .whenComplete(() {
+                                    setState(() {
+                                      //TODO update playlist view
+                                    });
+                                  });
+                                } else {
+                                  print('select a playlist');
+                                  return showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return CupertinoAlertDialog(
+                                          title:
+                                              Text('Please select a playlist'),
+                                        );
+                                      });
+                                }
+                              },
+                            ),
+                          );
+                        }),
+                  ),
+                ),
+              ),
+            );
+          }
         });
   }
 
@@ -257,3 +263,51 @@ class _YouTubeEntryState extends State<YoutubeEntry>
     });
   }
 }
+
+//DropDown Menu Option
+/*DropdownButton<String>(
+              value: selectedPlaylist,
+              onChanged: (value) {
+              setState(() {
+                      selectedPlaylist = value;
+              });
+              },
+              items: playlistNames.map<DropdownMenuItem<String>>((value) {
+              return DropdownMenuItem(
+                      child: Text(value),
+                      value: value,
+              );
+              }).toList(),
+              ),
+              Row(
+              children: <Widget>[
+              FlatButton(
+                        onPressed: () {
+                          if (selectedPlaylist != null) {
+                            addToPlaylist(selectedPlaylist, videoURL)
+                                .whenComplete(() {
+                              setState(() {
+                              });
+                            });
+                          } else {
+                            print('select a playlist');
+                            return showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CupertinoAlertDialog(
+                                    title: Text('Please select a playlist'),
+                                  );
+                                });
+                          }
+                        },
+                        child: Text('Add')),
+              FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          setState(() {
+                            selectedPlaylist = null;
+                          });
+                        },
+                        child: Text('Cancel')),
+              ],
+              )*/
