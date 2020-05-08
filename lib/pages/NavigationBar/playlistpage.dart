@@ -33,26 +33,31 @@ class _PlaylistPageState extends State<PlaylistPage>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
-                    'Playlists',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.height * .05),
-                  ),
-                  InkWell(
-                    child: Container(
-                      child: Icon(
-                        Icons.add,
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        'Playlists',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.height * .05),
                       ),
-                    ),
-                    onTap: () {
-                      _playlistHelper
-                          .createPlaylistBox(context)
-                          .whenComplete(() {
-                        loadPlaylist();
-                      });
-                    },
+                      InkWell(
+                        child: Container(
+                          child: Icon(
+                            Icons.add,
+                          ),
+                        ),
+                        onTap: () {
+                          _playlistHelper
+                              .createPlaylistBox(context)
+                              .whenComplete(() {
+                            loadPlaylist();
+                          });
+                        },
+                      ),
+                    ],
                   ),
                   InkWell(
                     child: Container(
@@ -69,7 +74,6 @@ class _PlaylistPageState extends State<PlaylistPage>
                   ),
                 ],
               ),
-              Divider(color: Colors.black),
               playlistList(),
             ],
           ),
@@ -132,8 +136,6 @@ class _PlaylistPageState extends State<PlaylistPage>
             ),
             height: MediaQuery.of(context).size.height * 0.45,
           ),
-          //TODO idk if adding lines is a good idea
-          Divider(color: Colors.black),
         ],
       ),
     );
