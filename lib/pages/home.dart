@@ -123,6 +123,14 @@ class HomeState extends State<HomePage> {
         resizeToAvoidBottomInset: true,
         backgroundColor: Theme.of(context).backgroundColor,
         body: SlidingUpPanel(
+            onPanelClosed: () {
+              setState(() {
+                selectedTab = 1;
+                pageController.animateToPage(selectedTab,
+                    duration: Duration(milliseconds: 200),
+                    curve: Curves.linear);
+              });
+            },
             controller: panelController,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30), topRight: Radius.circular(30)),

@@ -164,7 +164,7 @@ class _YouTubeEntryState extends State<YoutubeEntry>
               title: Text('No Playlists Found'),
             );
           } else {
-            return AlertDialog(
+            return CupertinoAlertDialog(
               title: Center(
                 child: Column(
                   children: <Widget>[
@@ -187,8 +187,9 @@ class _YouTubeEntryState extends State<YoutubeEntry>
                         itemCount: playlistNames.length,
                         itemBuilder: (context, index) {
                           return Card(
+                            elevation: 0,
+                            color: Colors.transparent,
                             child: ListTile(
-                              leading: Text('${index + 1})'),
                               title: Text(playlistNames[index]),
                               onTap: () {
                                 if (playlistNames[index] != null) {
@@ -244,9 +245,7 @@ class _YouTubeEntryState extends State<YoutubeEntry>
     print('playlistName: $playlistName');
     print('updated playlist: $updatedPlaylist');
     Navigator.of(context).pop();
-    setState(() {
-      selectedPlaylist = null;
-    });
+    setState(() {});
   }
 
   void playEpisode(String a) {
@@ -263,51 +262,3 @@ class _YouTubeEntryState extends State<YoutubeEntry>
     });
   }
 }
-
-//DropDown Menu Option
-/*DropdownButton<String>(
-              value: selectedPlaylist,
-              onChanged: (value) {
-              setState(() {
-                      selectedPlaylist = value;
-              });
-              },
-              items: playlistNames.map<DropdownMenuItem<String>>((value) {
-              return DropdownMenuItem(
-                      child: Text(value),
-                      value: value,
-              );
-              }).toList(),
-              ),
-              Row(
-              children: <Widget>[
-              FlatButton(
-                        onPressed: () {
-                          if (selectedPlaylist != null) {
-                            addToPlaylist(selectedPlaylist, videoURL)
-                                .whenComplete(() {
-                              setState(() {
-                              });
-                            });
-                          } else {
-                            print('select a playlist');
-                            return showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return CupertinoAlertDialog(
-                                    title: Text('Please select a playlist'),
-                                  );
-                                });
-                          }
-                        },
-                        child: Text('Add')),
-              FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          setState(() {
-                            selectedPlaylist = null;
-                          });
-                        },
-                        child: Text('Cancel')),
-              ],
-              )*/

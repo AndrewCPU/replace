@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class PlaylistPage extends StatefulWidget {
   @override
-  _PlaylistPageState createState() => _PlaylistPageState();
+  PlaylistPageState createState() => PlaylistPageState();
 }
 
-class _PlaylistPageState extends State<PlaylistPage>
+class PlaylistPageState extends State<PlaylistPage>
     with TickerProviderStateMixin {
   List<Playlist> playlists = [];
 

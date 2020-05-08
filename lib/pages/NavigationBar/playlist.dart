@@ -1,4 +1,5 @@
 import 'package:Replace/network/YoutubeConnection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,11 +18,18 @@ class PlaylistHelper {
     return showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return CupertinoAlertDialog(
             title: Text('Create Playlist'),
-            content: TextFormField(
-              controller: _textEditingController,
-              decoration: InputDecoration(hintText: "Playlist Name"),
+            content: Container(
+              width: 500,
+              height: 100,
+              child: Scaffold(
+                backgroundColor: Colors.transparent,
+                body: TextFormField(
+                  controller: _textEditingController,
+                  decoration: InputDecoration(hintText: "Playlist Name"),
+                ),
+              ),
             ),
             actions: <Widget>[
               FlatButton(
