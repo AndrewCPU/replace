@@ -1,4 +1,3 @@
-import 'package:Replace/pages/widgets/animatedbackground.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
@@ -23,10 +22,6 @@ class PromptState extends State<PromptPage> {
 
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).backgroundColor);
-    FlutterStatusbarcolor.setNavigationBarColor(
-        Theme.of(context).backgroundColor);
-
     Size size = MediaQuery.of(context).size;
 
     Container logoContainer = Container(
@@ -55,7 +50,6 @@ class PromptState extends State<PromptPage> {
       resizeToAvoidBottomPadding: true,
       body: Stack(
         children: <Widget>[
-          AnimatedBackground(),
           Center(
               child: Column(
             children: <Widget>[logo, sizedBox],

@@ -48,8 +48,9 @@ class HomeState extends State<HomePage> {
     FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
     //todo get currentTVID (qrCode) from state
     SharedPreferences.getInstance().then((prefs) {
+      currentTVID = prefs.getString("qrcode");
+      if(mounted)
       setState(() {
-        currentTVID = prefs.getString("qrcode");
       });
     });
     qr = QrImage(
@@ -103,9 +104,6 @@ class HomeState extends State<HomePage> {
         ],
       ),
     );
-    FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).cardColor);
-    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).cardColor);
-
     Size size = MediaQuery.of(context).size;
 
     var arr = [
@@ -139,6 +137,7 @@ class HomeState extends State<HomePage> {
             backdropEnabled: true,
             color: Theme.of(context).cardColor,
             minHeight: MediaQuery.of(context).size.height * .15,
+            maxHeight: MediaQuery.of(context).size.height * 0.9,
             panel: Container(
                 padding: EdgeInsets.only(
                   top: MediaQuery.of(context).size.height * .16,

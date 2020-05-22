@@ -1,4 +1,3 @@
-import 'package:Replace/pages/widgets/animatedbackground.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
@@ -105,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Widget login = MaterialButton(
       padding: EdgeInsets.all(15),
-      elevation: 6,
+      elevation: 2,
       minWidth: 300,
       child: Text(
         "Login",
@@ -119,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     Widget register = MaterialButton(
       padding: EdgeInsets.all(15),
-      elevation: 6,
+      elevation: 2,
       minWidth: 300,
       child: Text(
         "Register",
@@ -133,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     Widget subscribe = MaterialButton(
       padding: EdgeInsets.all(15),
-      elevation: 6,
+      elevation: 2,
       minWidth: 300,
       child: Text(
         "Subscribe",
@@ -178,18 +177,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          AnimatedBackground(),
-          Center(
-            child: Column(
-              children: <Widget>[
-                logo,
-                options,
-              ],
-            ),
-          )
-        ],
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Expanded(flex: 3, child: logo,),
+            Expanded(flex: 3, child: Container(),),
+            Expanded(flex: 2, child: options),
+          ],
+        ),
       ),
       backgroundColor: Theme.of(context).backgroundColor,
     );
