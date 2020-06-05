@@ -50,7 +50,7 @@ class NavigationState extends State<NavigationBar> {
                 ))
               ])),
           width: w,
-          height: h / 10,
+          height: h / 12,
         )));
   }
 }

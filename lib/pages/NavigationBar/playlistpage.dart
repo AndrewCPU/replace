@@ -28,55 +28,52 @@ class PlaylistPageState extends State<PlaylistPage>
           top: MediaQuery.of(context).size.height * .05,
           bottom: MediaQuery.of(context).size.height * .05,
         ),
-        child: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Playlists',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.height * .05),
-                      ),
-                      InkWell(
-                        child: Container(
-                          child: Icon(
-                            Icons.add,
-                          ),
-                        ),
-                        onTap: () {
-                          _playlistHelper
-                              .createPlaylistBox(context)
-                              .whenComplete(() {
-                            loadPlaylist();
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                    child: Container(
-                      child: Icon(
-                        Icons.refresh,
-                      ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(
+                      'Playlists',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.height * .05),
                     ),
-                    onTap: () {
-                      print(playlists);
-                      setState(() {
-                        loadPlaylist();
-                      });
-                    },
+                    InkWell(
+                      child: Container(
+                        child: Icon(
+                          Icons.add,
+                        ),
+                      ),
+                      onTap: () {
+                        _playlistHelper
+                            .createPlaylistBox(context)
+                            .whenComplete(() {
+                          loadPlaylist();
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                InkWell(
+                  child: Container(
+                    child: Icon(
+                      Icons.refresh,
+                    ),
                   ),
-                ],
-              ),
-              playlistList(),
-            ],
-          ),
+                  onTap: () {
+                    setState(() {
+                      loadPlaylist();
+                    });
+                  },
+                ),
+              ],
+            ),
+            playlistList(),
+          ],
         ),
       ),
     );

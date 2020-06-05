@@ -49,9 +49,7 @@ class HomeState extends State<HomePage> {
     //todo get currentTVID (qrCode) from state
     SharedPreferences.getInstance().then((prefs) {
       currentTVID = prefs.getString("qrcode");
-      if(mounted)
-      setState(() {
-      });
+      if (mounted) setState(() {});
     });
     qr = QrImage(
       data: "$currentTVID",
@@ -64,30 +62,23 @@ class HomeState extends State<HomePage> {
 
   PanelController panelController = PanelController();
 
-  //navbar
-
   int selectedTab = 1;
-
   final Map<int, Widget> tabSections = const <int, Widget>{
     0: Text('Settings'), //tab 1
     1: Text('Scan'), //tab 2
     2: Text('Playlists'), //tab 3
   };
-
   List<Widget> tabViews = [
     SettingsPage(),
     ScanQrView(),
     PlaylistPage(),
   ];
-
-  //page swipe
   final pageController = PageController(
     initialPage: 1,
   );
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     var text = new RichText(
       textAlign: TextAlign.left,
       text: new TextSpan(
@@ -144,37 +135,35 @@ class HomeState extends State<HomePage> {
                   left: MediaQuery.of(context).size.width * .05,
                   right: MediaQuery.of(context).size.width * .05,
                 ),
-                child: Center(
-                  child: Column(
-                    children: <Widget>[
-                      //TODO how to get swipe to change current tab bar too
-                      Container(
-                        width: MediaQuery.of(context).size.width * .8,
-                        child: CupertinoSegmentedControl(
-                            groupValue: selectedTab,
-                            children: tabSections,
-                            onValueChanged: (index) {
-                              setState(() {
-                                selectedTab = index;
-                                pageController.animateToPage(selectedTab,
-                                    duration: Duration(milliseconds: 200),
-                                    curve: Curves.linear);
-                              });
-                            }),
-                      ),
-                      Expanded(
-                        child: PageView(
-                            //physics: NeverScrollableScrollPhysics(),
-                            controller: pageController,
-                            children: tabViews,
-                            onPageChanged: (index) {
-                              setState(() {
-                                selectedTab = index;
-                              });
-                            }),
-                      )
-                    ],
-                  ),
+                child: Column(
+                  children: <Widget>[
+                    //TODO how to get swipe to change current tab bar too
+                    Container(
+                      width: MediaQuery.of(context).size.width * .8,
+                      child: CupertinoSlidingSegmentedControl(
+                          groupValue: selectedTab,
+                          children: tabSections,
+                          onValueChanged: (index) {
+                            setState(() {
+                              selectedTab = index;
+                              pageController.animateToPage(selectedTab,
+                                  duration: Duration(milliseconds: 200),
+                                  curve: Curves.linear);
+                            });
+                          }),
+                    ),
+                    Expanded(
+                      child: PageView(
+                          //physics: NeverScrollableScrollPhysics(),
+                          controller: pageController,
+                          children: tabViews,
+                          onPageChanged: (index) {
+                            setState(() {
+                              selectedTab = index;
+                            });
+                          }),
+                    )
+                  ],
                 )),
             collapsed: Container(
               child: Center(
@@ -187,40 +176,35 @@ class HomeState extends State<HomePage> {
             ),
             body: Stack(children: <Widget>[
 //          IndexedStack(children: <Widget>[SizedBox(child: VideoPlayer(), width: size.width, height: size.height / 2)],),
-              new Container(
-                child: Center(
-                  child: Container(
-                    margin: EdgeInsets.only(top: 100),
-                    child: ListView.builder(
-                      itemCount: arr.length + 1,
-                      cacheExtent: 1500 * 3.0,
-                      itemBuilder: (context, index) {
+              Container(
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height / 12),
+                child: ListView.builder(
+                  itemCount: arr.length + 1,
+                  cacheExtent: 1500 * 3.0,
+                  itemBuilder: (context, index) {
 //                        return Text(index.toString());
-                        if (index == arr.length) {
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: 100),
-                            child: Container(
-                              child: Column(
-                                children: <Widget>[
-                                  text,
-                                  UserGeneratedContentWidget(),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else
-                          return ChannelView(
-                            mode: arr[index],
-                          );
-                      },
-                      scrollDirection: Axis.vertical,
-                      physics: BouncingScrollPhysics(),
-                    ),
-                    padding: EdgeInsets.only(top: 20, bottom: 20),
-                  ),
+                    if (index == arr.length) {
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: 100),
+                        child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              text,
+                              UserGeneratedContentWidget(),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else
+                      return ChannelView(
+                        mode: arr[index],
+                      );
+                  },
+                  scrollDirection: Axis.vertical,
+                  physics: BouncingScrollPhysics(),
                 ),
-                height: size.height,
-                width: 500.0,
+                padding: EdgeInsets.only(top: 20, bottom: 20),
               ),
               NavigationBar()
             ])));

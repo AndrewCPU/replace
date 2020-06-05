@@ -81,17 +81,17 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   //added way to navigate to subscription page
-  void navigateToSubscribe() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return SubscribePage();
-    }));
-  }
+  //void navigateToSubscribe() {
+  //  Navigator.push(context, MaterialPageRoute(builder: (_) {
+  //   return SubscribePage();
+  //}));
+  // }
 
   @override
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).cardColor);
     FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).cardColor);
-
+    double width = MediaQuery.of(context).size.width;
     Text title = Text(
       "Welcome to REPLACE",
       style: TextStyle(fontSize: 30),
@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget login = MaterialButton(
       padding: EdgeInsets.all(15),
       elevation: 2,
-      minWidth: 300,
+      minWidth: width * .8,
       child: Text(
         "Login",
         style: TextStyle(color: Colors.black),
@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget register = MaterialButton(
       padding: EdgeInsets.all(15),
       elevation: 2,
-      minWidth: 300,
+      minWidth: width * .8,
       child: Text(
         "Register",
         style: TextStyle(color: Colors.black),
@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
           borderRadius: new BorderRadius.circular(30.0),
           side: BorderSide(color: Colors.white70)),
     );
-    Widget subscribe = MaterialButton(
+    /*Widget subscribe = MaterialButton(
       padding: EdgeInsets.all(15),
       elevation: 2,
       minWidth: 300,
@@ -143,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
       shape: RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0),
           side: BorderSide(color: Colors.white70)),
-    );
+    );*/
 
     login = Container(
       padding: EdgeInsets.only(top: 20),
@@ -153,20 +153,23 @@ class _MyHomePageState extends State<MyHomePage> {
       padding: EdgeInsets.only(top: 20),
       child: register,
     );
-    subscribe = Container(
+    /*subscribe = Container(
       padding: EdgeInsets.only(top: 20),
       child: subscribe,
-    );
+    );*/
 
     Container options = Container(
         height: size.height / 2,
         //margin: EdgeInsets.only(top: size.height / 4),
-        child: Column(children: <Widget>[(login), register, subscribe]));
+        child: Column(children: <Widget>[
+          login,
+          register, /*subscribe*/
+        ]));
 
     Container logoContainer = Container(
       child: Image.network(
         "http://replace.live/bigr/logo.jpg",
-        height: size.height / 3,
+        height: size.height / 4,
       ),
       margin: EdgeInsets.only(top: 50),
     );
@@ -178,10 +181,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       body: Center(
-        child: Column(
+        child: ListView(
           children: <Widget>[
-            Expanded(flex: 3, child: logo,),
-            Expanded(flex: 3, child: Container(),),
+            Expanded(
+              flex: 3,
+              child: logo,
+            ),
+            Expanded(
+              flex: 3,
+              child: Container(),
+            ),
             Expanded(flex: 2, child: options),
           ],
         ),

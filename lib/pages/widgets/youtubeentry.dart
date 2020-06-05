@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:Replace/network/YoutubeConnection.dart';
-import 'package:Replace/pages/NavigationBar/playlistpage.dart';
 import 'package:Replace/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -68,57 +67,77 @@ class _YouTubeEntryState extends State<YoutubeEntry>
     );
     Widget x = GestureDetector(
         onTap: () {
-      _controller.forward().then((onValue) {
-        _controller.reverse();
-      });
-      playEpisode(videoURL);
-    }, child: ScaleTransition(
-        scale: Tween(begin: 1.0, end: 1.08).animate(
-        CurvedAnimation(parent: _controller, curve: Curves.easeOutQuart)),
-    child: ClipRRect(borderRadius: BorderRadius.circular(10), child: Container(
-      width: MediaQuery.of(context).size.width / 1.5,
-      child: Container(
-        child: Column(children: [
-          Expanded(flex: 3, child: img),
-          Expanded(flex: 1, child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Center(
-                  child: Text(votes.toString()),
+          _controller.forward().then((onValue) {
+            _controller.reverse();
+          });
+          playEpisode(videoURL);
+        },
+        child: ScaleTransition(
+            scale: Tween(begin: 1.0, end: 1.08).animate(CurvedAnimation(
+                parent: _controller, curve: Curves.easeOutQuart)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                margin: EdgeInsets.all(5),
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Column(
+                  children: [
+                    Expanded(flex: 3, child: img),
+                    Expanded(
+                      flex: 1,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Center(
+                              child: Text(votes.toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Center(
+                              child: IconButton(
+                                icon: Icon(Icons.keyboard_arrow_up),
+                                color: Colors.greenAccent,
+                                onPressed: () => vote(1),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Center(
+                              child: IconButton(
+                                icon: Icon(Icons.keyboard_arrow_down),
+                                color: Colors.redAccent,
+                                onPressed: () => vote(-1),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            //flex: 1,
+                            child: GestureDetector(
+                              onTap: () {
+                                playlistSelect(videoURL);
+                              },
+                              child: Icon(Icons.add_to_photos),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    /*Expanded(
+                      //flex: 1,
+                      child: Center(
+                        child: FlatButton.icon(
+                          onPressed: () {
+                            playlistSelect(videoURL);
+                          },
+                          icon: Icon(Icons.add_to_photos),
+                          label: Text('Add To Playlist'),
+                        ),
+                      ),
+                    )*/
+                  ],
                 ),
               ),
-              Expanded(
-                child: Center(
-                  child: IconButton(
-                    icon: Icon(Icons.keyboard_arrow_up),
-                    color: Colors.greenAccent,
-                    onPressed: () => vote(1),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Center(
-                  child: IconButton(
-                    icon: Icon(Icons.keyboard_arrow_down),
-                    color: Colors.redAccent,
-                    onPressed: () => vote(-1),
-                  ),
-                ),
-              ),
-            ],
-          ),),
-          Expanded(flex: 1, child: Center(
-            child: FlatButton.icon(
-              onPressed: () {
-                playlistSelect(videoURL);
-              },
-              icon: Icon(Icons.add_to_photos),
-              label: Text('Add To Playlist'),
-            ),
-          ),)
-        ],),
-      ),
-    ),)));
+            )));
 
     return x;
   }
@@ -129,8 +148,6 @@ class _YouTubeEntryState extends State<YoutubeEntry>
     if (playlistNames == null) {
       playlistNames = ['defaultplaylist'];
     }
-    //TODO notify if there are no playlists to add to
-
     return showDialog(
         context: context,
         builder: (context) {
