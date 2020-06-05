@@ -91,8 +91,6 @@ class PlaylistHelper {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> updatedList = channelList;
     updatedList.remove(videoURL);
-    print(updatedList);
-    print(thisPlaylistName);
     prefs.setStringList(thisPlaylistName, updatedList);
   }
 
@@ -100,7 +98,6 @@ class PlaylistHelper {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> playlistNames = prefs.getStringList("playlists");
     List<Playlist> playlists = [];
-    print(playlistNames);
     if (playlistNames == null) {
       playlistNames = [];
       prefs.setStringList('playlists', playlistNames);

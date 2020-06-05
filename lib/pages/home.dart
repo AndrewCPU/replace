@@ -127,19 +127,18 @@ class HomeState extends State<HomePage> {
             backdropTapClosesPanel: true,
             backdropEnabled: true,
             color: Theme.of(context).cardColor,
-            minHeight: MediaQuery.of(context).size.height * .15,
-            maxHeight: MediaQuery.of(context).size.height * 0.9,
+            minHeight: size.height * .15,
+            maxHeight: size.height * 0.9,
             panel: Container(
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * .16,
-                  left: MediaQuery.of(context).size.width * .05,
-                  right: MediaQuery.of(context).size.width * .05,
+                  top: size.height * .16,
+                  left: size.width * .05,
+                  right: size.width * .05,
                 ),
                 child: Column(
                   children: <Widget>[
-                    //TODO how to get swipe to change current tab bar too
                     Container(
-                      width: MediaQuery.of(context).size.width * .8,
+                      width: size.width * .8,
                       child: CupertinoSlidingSegmentedControl(
                           groupValue: selectedTab,
                           children: tabSections,
@@ -177,8 +176,7 @@ class HomeState extends State<HomePage> {
             body: Stack(children: <Widget>[
 //          IndexedStack(children: <Widget>[SizedBox(child: VideoPlayer(), width: size.width, height: size.height / 2)],),
               Container(
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height / 12),
+                margin: EdgeInsets.only(top: size.height / 12),
                 child: ListView.builder(
                   itemCount: arr.length + 1,
                   cacheExtent: 1500 * 3.0,
@@ -186,7 +184,7 @@ class HomeState extends State<HomePage> {
 //                        return Text(index.toString());
                     if (index == arr.length) {
                       return Padding(
-                        padding: EdgeInsets.only(bottom: 100),
+                        padding: EdgeInsets.only(bottom: size.height * .17),
                         child: Container(
                           child: Column(
                             children: <Widget>[
