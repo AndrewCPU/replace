@@ -7,6 +7,14 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import '../colorsheet.dart';
 import 'login.dart';
 
+/*
+Name of file: register.dart
+Purpose: The purpose of the file is for users to input their email and password to create account
+Version and date: Version 2, last modified on 5/2/2020
+Author: Andrew Stein, Larry Long
+Dependencies: material and cupertino flutter package, flutterstatusbar package, email validator package
+colorsheet.dart, promptpage.dart, home.dart, login.dart, authentication.dart
+ */
 class RegisterPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => RegisterState();

@@ -1,6 +1,13 @@
 import 'package:Replace/pages/home.dart';
 import 'package:flutter/material.dart';
 
+/*
+Name of file: settingspage.dart
+Purpose: The purpose of the file is to display the certain account details
+Version and date: Version 2, last modified on 5/2/2020
+Author: Larry Long
+Dependencies: home.dart file, material flutter package
+ */
 class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => _SettingsPageState();

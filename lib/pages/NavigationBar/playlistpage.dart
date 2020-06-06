@@ -1,6 +1,17 @@
 import 'package:Replace/pages/NavigationBar/playlist.dart';
 import 'package:flutter/material.dart';
 
+/*
+Name of file: playlistpage.dart
+Purpose: The purpose of the file is to display the page where users
+will be able to view their playlists, create playlists, add to their playlists, delete playlists
+and also play videos from here.
+Version and date: Version 2, last modified on 6/5/2020
+Author: Larry Long and Andrew Stein
+Dependencies: playlist.dart file, material flutter package
+ */
+
+//stateful widget for playlist page UI
 class PlaylistPage extends StatefulWidget {
   @override
   PlaylistPageState createState() => PlaylistPageState();
@@ -9,17 +20,18 @@ class PlaylistPage extends StatefulWidget {
 class PlaylistPageState extends State<PlaylistPage>
     with TickerProviderStateMixin {
   List<Playlist> playlists = [];
-
   TextEditingController _textEditingController = TextEditingController();
   PlaylistHelper _playlistHelper = PlaylistHelper();
 
   @override
   void initState() {
+    //loads the playlists as the initial state of the page
     loadPlaylist();
     super.initState();
   }
 
   @override
+  //build function for widgets and displaying UI
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: ScrollPhysics(),
@@ -79,6 +91,7 @@ class PlaylistPageState extends State<PlaylistPage>
     );
   }
 
+  //ui for list of playlists
   Widget playlistList() {
     return ListView.builder(
         physics: NeverScrollableScrollPhysics(),
@@ -89,6 +102,7 @@ class PlaylistPageState extends State<PlaylistPage>
         });
   }
 
+  //ui for lists of playlist channels
   Widget playlistChannels(index) {
     String thisPlaylistName = playlists[index].playlistName;
     List<String> channelList = playlists[index].playlistChannels;
@@ -138,6 +152,7 @@ class PlaylistPageState extends State<PlaylistPage>
     );
   }
 
+  //ui for clickable playlist cards to play videos
   Widget playlistCard(context, index, thisPlaylistName, channelList) {
     String videoURL = channelList[index];
     AnimationController _controller = AnimationController(
@@ -226,6 +241,14 @@ class PlaylistPageState extends State<PlaylistPage>
         ));
   }
 
+  //no parameters or return value
+  //calls the getPlaylists function from the playlistHelper class and
+  //stores the list of playlists in a list
+  //calls the setstate to set the variable playlists at the top which the UI is
+  //dependent on. Setstate calls the buildFunction of the stateful widget to rebuild
+  //and show the current state of the playlists and its videos
+  //this function is called after each function to modify the playlists in any way
+  //in order to show the new UI to the user
   void loadPlaylist() async {
     List list = await _playlistHelper.getPlaylists();
     setState(() {

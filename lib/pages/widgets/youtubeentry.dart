@@ -6,6 +6,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/*
+Name of file: youtubeentry.dart
+Purpose: The purpose of the file is to create clickable cards to play youtube
+livestreams. The cards contain the image of the video for them to browse around.
+Version and date: Version 3, last modified on 6/5/2020
+Author: Andrew Stein, some UI by Larry Long
+Dependencies: async and math dart package, flutter cupertino and material package
+shared preferences flutter package, youtubeconnection.dart, home.dart
+ */
+//stateful widget to display ui for cards
 class YoutubeEntry extends StatefulWidget with Comparable {
   String videoTitle;
   String videoURL;
@@ -47,6 +57,7 @@ class _YouTubeEntryState extends State<YoutubeEntry>
   @override
   void initState() {
     super.initState();
+    //animation when clicking the cards, scale transition for bounce effect
     _controller = AnimationController(
         duration: const Duration(milliseconds: 500),
         vsync: this,
@@ -142,6 +153,11 @@ class _YouTubeEntryState extends State<YoutubeEntry>
     return x;
   }
 
+  //requires video url as string
+  //no return value
+  //creates a pop up box for users to choose which playlist they want to add
+  //desired video to. if there are no playlists, it states that as well
+  //it calls the add to playlist function to add the video urls to shared preferences
   Future playlistSelect(videoURL) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> playlistNames = prefs.getStringList("playlists");
@@ -214,6 +230,11 @@ class _YouTubeEntryState extends State<YoutubeEntry>
         });
   }
 
+  // requires name of playlist and video url
+  // no return data
+  // gets the list of video urls of a desired playlist from shared preferences
+  // adds the desired video url to this list and sets it in shared preferences
+  // with the update list of video urls
   Future addToPlaylist(playlistName, videoURL) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> updatedPlaylist = prefs.getStringList(playlistName);
@@ -240,6 +261,9 @@ class _YouTubeEntryState extends State<YoutubeEntry>
     setState(() {});
   }
 
+  //requires video url
+  //no return data
+  //plays the video
   void playEpisode(String a) {
     print("SENDING PLAY CODE FOR " + a);
     var tvID = HomeState.currentTVID;

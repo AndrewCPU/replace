@@ -6,6 +6,15 @@ import 'login/login.dart';
 import 'login/register.dart';
 import 'login/subscribe.dart'; //imported subscribe.dart
 
+/*
+Name of file: main.dart
+Purpose: The purpose of the file is to start the app. First file run on start and also
+displays the first page you see. Includes navigation to login and register pages
+Version and date: Version 3, last modified on 6/5/2020
+Author: Andrew Stein and Larry Long
+Dependencies: material flutter package, flutterstatusbar package
+colorsheet.dart, login.dart, register.dart, 
+ */
 void main() {
   // ignore: undefined_prefixed_name
 
@@ -58,6 +67,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//stateful widget for displaying home page ui
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -68,12 +78,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //no parameters
+  //no return value
+  // calls the navigator.push  to navigate to the login page
   void navigateToLogin() {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return LoginPage();
     }));
   }
 
+  //no parameters
+  //no return value
+  // calls the navigator.push  to navigate to the register page
   void navigateToRegister() {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return RegisterPage();
@@ -88,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // }
 
   @override
+  //build function for displaying ui
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).cardColor);
     FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).cardColor);

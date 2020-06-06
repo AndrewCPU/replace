@@ -7,6 +7,15 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 import '../colorsheet.dart';
 
+/*
+Name of file: changepass.dart
+Purpose: The purpose of the file is for users to be able to change their password and also
+navigate back to the home page as well
+Version and date: Version 2, last modified on 5/2/2020
+Author: Larry Long
+Dependencies: material and cupertino flutter package, flutterstatusbar package, email validator package
+colorsheet.dart, promptpage.dart, home.dart, 
+ */
 class ChangePassPage extends StatefulWidget {
   void initState() {
     FlutterStatusbarcolor.setStatusBarColor(Colorsheet.background);
@@ -47,6 +56,10 @@ class _ChangePassPageState extends State<ChangePassPage> {
     );
   }
 
+  //no parameter
+  // no return
+  //takes in email input from user
+  //still in progress
   void changepassword() {
     bool valid = EmailValidator.validate(_controller.text);
     if (valid) {

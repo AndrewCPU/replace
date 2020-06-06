@@ -14,6 +14,22 @@ import 'package:Replace/pages/NavigationBar/scanqr.dart';
 import 'NavigationBar/playlistpage.dart';
 import 'NavigationBar/settingspage.dart';
 
+/*
+Name of file: home.dart
+Purpose: The purpose of the file is to the ui for the home page, containg all the different
+categories which users can watch live streams from. it displays the clickable channel cards
+created from the youtubeentry.dart file and channelview.dart file. 
+It also displays a sliding up panel for different features such as scanning the qr code
+to connect your device and also personalizing user experience with playlists.
+Version and date: Version 4, last modified on 6/5/2020
+Author: Andrew Stein, some UI by Larry Long
+Dependencies: qr scan, sliding up panel, shared preferences, flutter statusbar
+flutter cupertino and material packages
+youtubeconnection.dart, channelview.dart, appbar.dart, usercontent.dart
+playlistpage.dart, settingspage.dart
+ */
+
+//stateful widget to display ui
 class HomePage extends StatefulWidget {
   String collapsedText;
   Widget panel;
@@ -78,6 +94,7 @@ class HomeState extends State<HomePage> {
   );
 
   @override
+  //build function for displaying ui
   Widget build(BuildContext context) {
     var text = new RichText(
       textAlign: TextAlign.left,
@@ -97,6 +114,7 @@ class HomeState extends State<HomePage> {
     );
     Size size = MediaQuery.of(context).size;
 
+    //different categories to search for youtube livestreams
     var arr = [
       "cartoons",
       "news",
@@ -111,6 +129,7 @@ class HomeState extends State<HomePage> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Theme.of(context).backgroundColor,
+        //sliding up panel
         body: SlidingUpPanel(
             onPanelClosed: () {
               setState(() {
@@ -139,6 +158,7 @@ class HomeState extends State<HomePage> {
                   children: <Widget>[
                     Container(
                       width: size.width * .8,
+                      //navigation for features in panel
                       child: CupertinoSlidingSegmentedControl(
                           groupValue: selectedTab,
                           children: tabSections,
@@ -208,10 +228,18 @@ class HomeState extends State<HomePage> {
             ])));
   }
 
+  //no paramters
+  // no return value
+  // opens the panel when users click on button on top of it
+  // users can swipe to open as well
   void open() {
     panelController.open();
   }
 
+  //requires qrcode string id
+  //no return value
+  //takes the qrcode id and saves into shared preferences for future use
+  // and convenience when connecting to device
   void saveLocally(qrCode) async {
     //https://github.com/flutter/plugins/tree/master/packages/shared_preferences/shared_preferences
     /*
@@ -221,6 +249,10 @@ class HomeState extends State<HomePage> {
     await prefs.setString('qrcode', qrCode);
   }
 
+  //no parameters
+  //no return value
+  //uses scanner package to scan qr code and gets the qrcode and calls
+  //the saveLocally function sending the qrcode id as an argument.
   updateQR() {
     print("UPDATE");
     scanner.scan().then((resp) {

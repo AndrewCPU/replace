@@ -7,6 +7,14 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 import '../colorsheet.dart';
 
+/*
+Name of file: subscribe.dart
+Purpose: The purpose of the file is for users to input their email and subrscribe to a mailing list.
+Version and date: Version 2, last modified on 5/2/2020
+Author: Andrew Stein, Larry Long, Justin Daniel
+Dependencies: material and cupertino flutter package, flutterstatusbar package, email validator package
+colorsheet.dart, promptpage.dart, home.dart, 
+ */
 class SubscribePage extends StatefulWidget {
   void initState() {
     FlutterStatusbarcolor.setStatusBarColor(Colorsheet.background);
@@ -51,6 +59,10 @@ class _SubscribePageState extends State<SubscribePage> {
     );
   }
 
+  //no parameter
+  //no return
+  //takes in email input from user
+  //still in progress
   void subscribe() {
     bool valid = EmailValidator.validate(_controller.text);
     if (valid) {
